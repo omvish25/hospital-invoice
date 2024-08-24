@@ -23,24 +23,24 @@ import PageWrapper from "../../page-wrapper";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [{
-  id: "name",
-  label: "Name",
+  id: "BillNo",
+  label: "Bill No",
   align: "left"
 }, {
-  id: "category",
-  label: "Category",
+  id: "MrNo",
+  label: "Mr No",
   align: "left"
 }, {
-  id: "brand",
-  label: "Brand",
+  id: "PatientName",
+  label: "Patient Name",
   align: "left"
 }, {
-  id: "price",
-  label: "Price",
+  id: "DoctorName",
+  label: "Doctor Name",
   align: "left"
 }, {
-  id: "published",
-  label: "Published",
+  id: "TotalBillAmount",
+  label: "Total Bill Amount",
   align: "left"
 }, {
   id: "action",
