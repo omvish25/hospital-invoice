@@ -1,66 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/app/lib/utils';
-import { Ipd } from '@/app/lib/models'; 
+import { IpdCasePaper } from '@/app/lib/models';
 
 export async function POST(request) {
     try {
         await connectToDatabase();
+
         const body = await request.json();
-        const { 
-            BillNo, 
-            MrNo, 
-            PatientName, 
-            DoctorName, 
-            PatientType, 
-            IpdNo, 
-            Age, 
-            Sex, 
-            BillDate, 
-            DoaTime, 
-            DodTime, 
-            WardName, 
-            services, 
-            TotalBillAmount, 
-            ConsAmount, 
-            NetPayAmount, 
-            PaidAmount, 
-            DueAmount, 
-            status, 
-            AdvanceAmount, 
-            AdvanceBalAmount, 
-            AdvanceRefundAmount, 
-            PaymentDetails 
+
+        const {
+            MrNo,
+            PatientName,
+            Age,
+            Sex,
+            MaritialStatus,
+            Address,
+            MobileNo,
+            PhoneNumber,
+            AdmissionDate,
+            IpNo,
+            DoctorName,
+            SecondDoctorName,
+            ThirdDoctorName,
+            RefDoctorName,
+            RelativeName,
+            PatientCategory,
+            isReimbursement,
+            MlcNo,
+            AdmissionTime,
+            DepartmentName,
+            CompanyName,
+            TariffName,
+            BedName,
+            RelationName,
+            RelationPhoneNoo,
+            RelationAddress,
         } = body;
 
-        const newIpd = new Ipd({
-            BillNo, 
-            MrNo, 
-            PatientName, 
-            DoctorName, 
-            PatientType, 
-            IpdNo, 
-            Age, 
-            Sex, 
-            BillDate, 
-            DoaTime, 
-            DodTime, 
-            WardName, 
-            services, 
-            TotalBillAmount, 
-            ConsAmount, 
-            NetPayAmount, 
-            PaidAmount, 
-            DueAmount, 
-            status, 
-            AdvanceAmount, 
-            AdvanceBalAmount, 
-            AdvanceRefundAmount, 
-            PaymentDetails
+        const newIpdCasePaper = new IpdCasePaper({
+            MrNo,
+            PatientName,
+            Age,
+            Sex,
+            MaritialStatus,
+            Address,
+            MobileNo,
+            PhoneNumber,
+            AdmissionDate,
+            IpNo,
+            DoctorName,
+            SecondDoctorName,
+            ThirdDoctorName,
+            RefDoctorName,
+            RelativeName,
+            PatientCategory,
+            isReimbursement,
+            MlcNo,
+            AdmissionTime,
+            DepartmentName,
+            CompanyName,
+            TariffName,
+            BedName,
+            RelationName,
+            RelationPhoneNoo,
+            RelationAddress,
         });
-        await newIpd.save();
-        return NextResponse.json({ message: 'IPD record created successfully', ipd: newIpd }, { status: 201 });
+
+        // Save the document to the database
+        await newIpdCasePaper.save();
+
+        // Return a success response with the created IpdCasePaper record
+        return NextResponse.json({ message: 'IPD Case Paper record created successfully', ipdCasePaper: newIpdCasePaper }, { status: 201 });
     } catch (error) {
-        console.error('Error creating IPD record:', error);
+        // Log any errors and return an error response
+        console.error('Error creating IPD Case Paper record:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
