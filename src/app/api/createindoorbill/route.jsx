@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/app/lib/utils';
 import { Ipd } from "../../lib/models" 
-
+import connectToDatabase from '../../lib/utils';
 export async function POST(request) {
     try {
         await connectToDatabase();
