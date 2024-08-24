@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectToDatabase from '@/app/lib/utils';
-import { IpdCasePaper } from '@/app/lib/models';
+import connectToDatabase from '../../lib/utils';
+import { IpdCase } from '../../lib/models';
 
 export async function POST(request) {
     try {
@@ -37,7 +37,7 @@ export async function POST(request) {
             RelationAddress,
         } = body;
 
-        const newIpdCasePaper = new IpdCasePaper({
+        const newIpdCasePaper = new IpdCase({
             MrNo,
             PatientName,
             Age,
@@ -70,7 +70,7 @@ export async function POST(request) {
         await newIpdCasePaper.save();
 
         // Return a success response with the created IpdCasePaper record
-        return NextResponse.json({ message: 'IPD Case Paper record created successfully', ipdCasePaper: newIpdCasePaper }, { status: 201 });
+        return NextResponse.json({ message: 'IPD Case Paper record created successfully', IpdCase: newIpdCasePaper }, { status: 201 });
     } catch (error) {
         // Log any errors and return an error response
         console.error('Error creating IPD Case Paper record:', error);
