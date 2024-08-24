@@ -17,7 +17,7 @@ export const navigation = [{
     path: "/admin/products/create"
   },]
 }, {
-  name: "Categories",
+  name: "Case Paper",
   icon: duotone.Accounts,
   children: [{
     name: "Category List",
