@@ -8,3 +8,10 @@ export const IndoorBillsEndpoints = {
   EDITINDOORBILL_API: BASE_URL + "/editindoorbill",
   DELETEINDOORBILL_API: BASE_URL + "/deleteindoorbill",
 }
+export const IpdCaseEndpoints = {
+  CREATEIPDCASE_API: BASE_URL + "/createindoorcasepaper",
+  GETIPDCASE_API: BASE_URL + "/getindoorcasepaperbypaggination",
+  GETSEARCHIPDCASE_API: BASE_URL + "/getindoorcasepaperbysearch",
+  EDITIPDCASE_API: BASE_URL + "/editindoorcasepaper",
+  DELETEIPDCASE_API: BASE_URL + "/deleteindoorcasepaper",
+}

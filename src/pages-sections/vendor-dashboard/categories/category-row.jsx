@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Avatar from "@mui/material/Avatar"; 
+import Avatar from "@mui/material/Avatar";
 // MUI ICON COMPONENTS
 
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
-import RemoveRedEye from "@mui/icons-material/RemoveRedEye"; 
+import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
 // GLOBAL CUSTOM COMPONENT
 
-import BazaarSwitch from "components/BazaarSwitch"; 
+import BazaarSwitch from "components/BazaarSwitch";
 // STYLED COMPONENTS
 
-import { StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } from "../styles"; 
+import { StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } from "../styles";
 // ========================================================================
 
 
 // ========================================================================
 export default function CategoryRow({ caseData }) {
+  console.log("caseData", caseData);
   const {
     MrNo,
     PatientName,
