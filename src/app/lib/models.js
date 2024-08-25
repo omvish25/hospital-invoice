@@ -31,17 +31,18 @@ const IpdSchema = new mongoose.Schema(
             required: true,
         },
         BillDate: {
-            type: String,
+            type: Date,
             required: true,
         },
         DoaTime: {
-            type: String,
+            type: Date,
             required: true,
         },
         DodTime: {
-            type: String,
+            type: Date,
             required: true,
         },
+        
         WardName: {
             type: String,
             required: true,
