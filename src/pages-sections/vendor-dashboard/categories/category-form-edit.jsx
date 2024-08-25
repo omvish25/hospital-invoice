@@ -57,12 +57,14 @@ const VALIDATION_SCHEMA = yup.object().shape({
 
 // ================================================================
 export default function CategoryForm(props) {
+    const [currentCategoryData, setCurrentCategoryData] = useState();
+    const [id, setId] = useState();
     async function fetchData() {
         try {
             const response = await axios.get(
                 `${BASE_URL}/api/finddatabyidipocase/?slug=${slug}`
             );
-            setCurrentCategoryData(response?.data?.category);
+            setCurrentCategoryData(response?.data?.data);
             setId(response?.data?.category?._id);
         } catch (error) {
             console.error("Failed to fetch data", error);
