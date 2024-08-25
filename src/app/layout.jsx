@@ -1,4 +1,6 @@
 import { Open_Sans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+
 import { GoogleAnalytics } from '@next/third-parties/google';
 export const openSans = Open_Sans({
   subsets: ["latin"]
@@ -29,6 +31,7 @@ export default function RootLayout({
             <ThemeProvider>
               <ProgressBar />
               <RTL>{children}</RTL>
+              <Toaster />
             </ThemeProvider>
           </SettingsProvider>
         </CartProvider>
