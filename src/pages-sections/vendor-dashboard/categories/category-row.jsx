@@ -16,49 +16,35 @@ import { StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } fr
 
 
 // ========================================================================
-export default function CategoryRow({
-  category,
-  selected
-}) {
+export default function CategoryRow({ caseData }) {
   const {
-    image,
-    name,
-    level,
-    featured,
+    MrNo,
+    PatientName,
+    DoctorName,
+    CompanyName,
+    AdmissionDate,
     id,
+    published,
     slug
-  } = category || {};
+  } = caseData || {};
+
   const router = useRouter();
-  const [featuredCategory, setFeaturedCategory] = useState(featured);
-  const hasSelected = selected.indexOf(name) !== -1;
+  const [casePublish, setCasePublish] = useState(published);
 
-  const handleNavigate = () => router.push(`/admin/categories/${slug}`);
-
-  return <StyledTableRow tabIndex={-1} role="checkbox" selected={hasSelected}>
-      <StyledTableCell align="left">#{id.split("-")[0]}</StyledTableCell>
-
-      <StyledTableCell align="left">
-        <CategoryWrapper>{name}</CategoryWrapper>
-      </StyledTableCell>
-
-      <StyledTableCell align="left">
-        <Avatar alt={name} src={image} sx={{
-        borderRadius: 2
-      }} />
-      </StyledTableCell>
-
-      <StyledTableCell align="left">{level}</StyledTableCell>
-
-      <StyledTableCell align="left">
-        <BazaarSwitch color="info" checked={featuredCategory} onChange={() => setFeaturedCategory(state => !state)} />
-      </StyledTableCell>
+  return (
+    <StyledTableRow tabIndex={-1} role="checkbox">
+      <StyledTableCell align="left">{MrNo}</StyledTableCell>
+      <StyledTableCell align="left">{PatientName}</StyledTableCell>
+      <StyledTableCell align="left">{DoctorName}</StyledTableCell>
+      <StyledTableCell align="left">{CompanyName}</StyledTableCell>
+      <StyledTableCell align="left">{AdmissionDate}</StyledTableCell>
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={handleNavigate}>
+        <StyledIconButton onClick={() => router.push(`/admin/ipdcase/${slug}`)}>
           <Edit />
         </StyledIconButton>
 
-        <StyledIconButton onClick={handleNavigate}>
+        <StyledIconButton>
           <RemoveRedEye />
         </StyledIconButton>
 
@@ -66,5 +52,6 @@ export default function CategoryRow({
           <Delete />
         </StyledIconButton>
       </StyledTableCell>
-    </StyledTableRow>;
+    </StyledTableRow>
+  );
 }

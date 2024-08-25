@@ -2,23 +2,23 @@
 // TABLE HEADING DATA LIST
 export const tableHeading = [{
   id: "id",
-  label: "ID",
+  label: "MrNo",
   align: "left"
 }, {
   id: "name",
-  label: "Name",
+  label: "PatientName",
   align: "left"
 }, {
   id: "image",
-  label: "Image",
+  label: "DoctorName",
   align: "left"
 }, {
   id: "level",
-  label: "Level",
+  label: "CompanyName",
   align: "left"
 }, {
   id: "featured",
-  label: "Featured",
+  label: "AdmissionDate",
   align: "left"
 }, {
   id: "action",
