@@ -1,58 +1,71 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Ipd } from "../../lib/models";
+import { Ipd } from '../../lib/models';
 import connectToDatabase from '../../lib/utils';
-import { ObjectId } from 'mongodb'; 
+import { ObjectId } from 'mongodb';
 
 export async function PUT(request) {
     try {
+        // Establish a connection to the database
         await connectToDatabase();
-        const body = await request.json();
-        const { _id } = body;
 
+        // Parse the incoming JSON request
+        const { _id, MrNo,BillNo, PatientName, DoctorName, PatientType, IpdNo, Age, Sex, BillDate, DoaTime, DodTime, WardName, services, TotalBillAmount, ConsAmount, NetPayAmount, PaidAmount, DueAmount, status, AdvanceAmount, AdvanceBalAmount, AdvanceRefundAmount, PaymentDetails } = await request.json();
+
+        // Validate the presence of the IPD record ID
         if (!_id) {
-            return NextResponse.json({ error: '_id is required' }, { status: 400 });
+            return new NextResponse(JSON.stringify({ error: '_id is required' }), { status: 400 });
         }
 
+        // Validate the format of the provided ID
         if (!ObjectId.isValid(_id)) {
-            return NextResponse.json({ error: 'Invalid _id format' }, { status: 400 });
+            return new NextResponse(JSON.stringify({ error: 'Invalid _id format' }), { status: 400 });
         }
 
-        const updatedFields = {
-            MrNo: body.MrNo, 
-            PatientName: body.PatientName, 
-            DoctorName: body.DoctorName, 
-            PatientType: body.PatientType, 
-            IpdNo: body.IpdNo, 
-            Age: body.Age, 
-            Sex: body.Sex, 
-            BillDate: body.BillDate, 
-            DoaTime: body.DoaTime, 
-            DodTime: body.DodTime, 
-            WardName: body.WardName, 
-            services: body.services, 
-            TotalBillAmount: body.TotalBillAmount, 
-            ConsAmount: body.ConsAmount, 
-            NetPayAmount: body.NetPayAmount, 
-            PaidAmount: body.PaidAmount, 
-            DueAmount: body.DueAmount, 
-            status: body.status, 
-            AdvanceAmount: body.AdvanceAmount, 
-            AdvanceBalAmount: body.AdvanceBalAmount, 
-            AdvanceRefundAmount: body.AdvanceRefundAmount, 
-            PaymentDetails: body.PaymentDetails
-        };
+        // Find the existing IPD record by ID
+        const ipdRecord = await Ipd.findById(_id);
 
-        Object.keys(updatedFields).forEach(key => updatedFields[key] === undefined && delete updatedFields[key]);
-
-        const updatedIpd = await Ipd.findByIdAndUpdate(_id, updatedFields, { new: true });
-
-        if (!updatedIpd) {
-            return NextResponse.json({ error: 'IPD record not found' }, { status: 404 });
+        // If the IPD record does not exist, return a 404 response
+        if (!ipdRecord) {
+            return new NextResponse(JSON.stringify({ error: 'IPD record not found' }), { status: 404 });
         }
 
-        return NextResponse.json({ message: 'IPD record updated successfully', ipd: updatedIpd }, { status: 200 });
+        // Update the IPD record fields if provided in the request
+        if (MrNo) ipdRecord.MrNo = MrNo;
+        if (BillNo) ipdRecord.BillNo = BillNo;
+
+
+        
+        if (PatientName) ipdRecord.PatientName = PatientName;
+        if (DoctorName) ipdRecord.DoctorName = DoctorName;
+        if (PatientType) ipdRecord.PatientType = PatientType;
+        if (IpdNo) ipdRecord.IpdNo = IpdNo;
+        if (Age) ipdRecord.Age = Age;
+        if (Sex) ipdRecord.Sex = Sex;
+        if (BillDate) ipdRecord.BillDate = BillDate;
+        if (DoaTime) ipdRecord.DoaTime = DoaTime;
+        if (DodTime) ipdRecord.DodTime = DodTime;
+        if (WardName) ipdRecord.WardName = WardName;
+        if (services) ipdRecord.services = services;
+        if (TotalBillAmount) ipdRecord.TotalBillAmount = TotalBillAmount;
+        if (ConsAmount) ipdRecord.ConsAmount = ConsAmount;
+        if (NetPayAmount) ipdRecord.NetPayAmount = NetPayAmount;
+        if (PaidAmount) ipdRecord.PaidAmount = PaidAmount;
+        if (DueAmount) ipdRecord.DueAmount = DueAmount;
+        if (status) ipdRecord.status = status;
+        if (AdvanceAmount) ipdRecord.AdvanceAmount = AdvanceAmount;
+        if (AdvanceBalAmount) ipdRecord.AdvanceBalAmount = AdvanceBalAmount;
+        if (AdvanceRefundAmount) ipdRecord.AdvanceRefundAmount = AdvanceRefundAmount;
+        if (PaymentDetails) ipdRecord.PaymentDetails = PaymentDetails;
+
+        // Save the updated IPD record back to the database
+        await ipdRecord.save();
+
+        // Return a success response with the updated IPD record data
+        return new NextResponse(JSON.stringify({ success: true, ipd: ipdRecord }), { status: 200 });
+
     } catch (error) {
+        // Log any errors that occur and return a 500 response
         console.error('Error updating IPD record:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
     }
 }
