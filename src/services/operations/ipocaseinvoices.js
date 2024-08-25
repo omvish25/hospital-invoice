@@ -14,7 +14,7 @@ export const Addinvoiceipdhandler = async (data) => {
     toast.dismiss(toastId);
 };
 
-export const Editadmin = async (data) => {
+export const Editadmin = async (data, id) => {
     const toastId = toast.loading("Editing Admin...");
     try {
         const response = await apiConnector("PUT", EDITIPDCASE_API, data);

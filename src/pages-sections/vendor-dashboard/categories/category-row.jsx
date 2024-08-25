@@ -42,7 +42,7 @@ export default function CategoryRow({ caseData }) {
       <StyledTableCell align="left">{AdmissionDate}</StyledTableCell>
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/admin/ipdcase/${slug}`)}>
+        <StyledIconButton onClick={() => router.push(`/admin/categories/${id}`)}>
           <Edit />
         </StyledIconButton>
 

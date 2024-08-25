@@ -7,14 +7,17 @@ export async function PUT(request) {
     try {
         await connectToDatabase();
 
-        const id = searchParams.get('id');
+        // const id = searchParams.get('id');
 
-        if (!id) {
-            return NextResponse.json({ error: 'ID parameter is required' }, { status: 400 });
-        }
+        // if (!id) {
+        //     return NextResponse.json({ error: 'ID parameter is required' }, { status: 400 });
+        // }
 
         // Parse the request body to get the fields that need to be updated
         const body = await request.json();
+        console.log('Body:', body);
+        const _id = body.id;
+        console.log('ID:', _id);
         const updateFields = {};
 
         // Add fields to the update object only if they are provided in the request body
@@ -46,7 +49,8 @@ export async function PUT(request) {
         if (body.RelationAddress) updateFields.RelationAddress = body.RelationAddress;
 
         // Update the document in the database
-        const updatedIpdCasePaper = await IpdCase.findByIdAndUpdate(id, updateFields, { new: true });
+        const updatedIpdCasePaper = await IpdCase.findByIdAndUpdate(_id, updateFields, { new: true });
+        console.log('Updated:', updatedIpdCasePaper);
 
         if (!updatedIpdCasePaper) {
             return NextResponse.json({ error: 'IPD Case Paper record not found' }, { status: 404 });

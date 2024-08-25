@@ -5,6 +5,7 @@ import { IpdCase } from '../../lib/models';
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('slug');
+    console.log('ID:', id);
 
     if (!id) {
         return NextResponse.json({ error: 'ID (slug) is required' }, { status: 400 });

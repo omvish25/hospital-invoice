@@ -14,72 +14,63 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PageWrapper from "../page-wrapper";
 import { Addinvoiceipdhandler } from "services/operations/ipocaseinvoices";
 
-
 const VALIDATION_SCHEMA = yup.object().shape({
-  CaseNo: yup.string().required("Case No is required!"),
   MrNo: yup.string().required("MR No is required!"),
-  PatientName: yup.string().required("Patient Name is required!"),
-  Age: yup.number().required("Age is required!").positive().integer(),
+  PatientName: yup.string(),
+  Age: yup.string().required("Age is required!"),
   Sex: yup.string().required("Sex is required!"),
-  MaritalStatus: yup.string().required("Marital Status is required!"),
-  Address: yup.string().required("Address is required!"),
-  ContactNumber: yup.string().required("Contact Number is required!"),
-  Email: yup.string().email("Invalid email format").required("Email is required!"),
-  CompanyName: yup.string().required("Company Name is required!"),
-  AdmissionDate: yup.date().required("Admission Date is required!"),
-  AdmissionTime: yup.date().required("Admission Time is required!"),
-  DischargeDate: yup.date().nullable(),
-  DischargeTime: yup.date().nullable(),
-  Department: yup.string().required("Department is required!"),
-  BedName: yup.string().required("Bed Name is required!"),
-  DoctorName: yup.string().required("Doctor Name is required!"),
+  MaritialStatus: yup.string(),
+  Address: yup.string(),
+  MobileNo: yup.string(),
+  PhoneNumber: yup.string(),
+  AdmissionDate: yup.string(),
+  IpNo: yup.string(),
+  DoctorName: yup.string(),
+  SecondDoctorName: yup.string(),
+  ThirdDoctorName: yup.string(),
   RefDoctorName: yup.string(),
-  Diagnosis: yup.string().required("Diagnosis is required!"),
-  Treatment: yup.string().required("Treatment is required!"),
-  services: yup.array().of(
-    yup.object().shape({
-      serviceName: yup.string().required("Service Name is required!"),
-      servicePrice: yup.number().required("Service Price is required!").positive(),
-      serviceQty: yup.number().required("Service Quantity is required!").positive().integer(),
-      serviceTotal: yup.number().required("Service Total is required!").positive(),
-    })
-  ),
-  Status: yup.string().required("Status is required!"),
-  PaymentDetails: yup.array().of(
-    yup.object().shape({
-      PaymentType: yup.string().required("Payment Type is required!"),
-      PaymentAmount: yup.number().required("Payment Amount is required!").positive(),
-    })
-  ),
+  RelativeName: yup.string(),
+  PatientCategory: yup.string(),
+  isReimbursement: yup.string().required("Reimbursement status is required!"),
+  MlcNo: yup.string().required("MLC No is required!"),
+  AdmissionTime: yup.string().required("Admission Time is required!"),
+  DepartmentName: yup.string().required("Department Name is required!"),
+  CompanyName: yup.string().required("Company Name is required!"),
+  TariffName: yup.string().required("Tariff Name is required!"),
+  BedName: yup.string().required("Bed Name is required!"),
+  RelationName: yup.string().required("Relation Name is required!"),
+  RelationPhoneNoo: yup.string().required("Relation Phone No is required!"),
+  RelationAddress: yup.string().required("Relation Address is required!"),
 });
 
-
-// ================================================================
 export default function CategoryForm(props) {
   const INITIAL_VALUES = {
-    CaseNo: "",
     MrNo: "",
     PatientName: "",
     Age: "",
     Sex: "",
-    MaritalStatus: "",
+    MaritialStatus: "",
     Address: "",
-    ContactNumber: "",
-    Email: "",
-    CompanyName: "",
-    AdmissionDate: null,
-    AdmissionTime: null,
-    DischargeDate: null,
-    DischargeTime: null,
-    Department: "",
-    BedName: "",
+    MobileNo: "",
+    PhoneNumber: "",
+    AdmissionDate: "",
+    IpNo: "",
     DoctorName: "",
+    SecondDoctorName: "",
+    ThirdDoctorName: "",
     RefDoctorName: "",
-    Diagnosis: "",
-    Treatment: "",
-    services: [{ serviceName: "", servicePrice: "", serviceQty: "", serviceTotal: "" }],
-    Status: "",
-    PaymentDetails: [{ PaymentType: "", PaymentAmount: "" }],
+    RelativeName: "",
+    PatientCategory: "",
+    isReimbursement: "",
+    MlcNo: "",
+    AdmissionTime: "",
+    DepartmentName: "",
+    CompanyName: "",
+    TariffName: "",
+    BedName: "",
+    RelationName: "",
+    RelationPhoneNoo: "",
+    RelationAddress: "",
   };
 
   const handleFormSubmit = async (values) => {
@@ -107,23 +98,6 @@ export default function CategoryForm(props) {
           }) => (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
-                {/* Case Number */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    name="CaseNo"
-                    label="Case No"
-                    color="info"
-                    size="medium"
-                    placeholder="Case No"
-                    value={values.CaseNo}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    helperText={touched.CaseNo && errors.CaseNo}
-                    error={Boolean(touched.CaseNo && errors.CaseNo)}
-                  />
-                </Grid>
-
                 {/* MR Number */}
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -167,7 +141,6 @@ export default function CategoryForm(props) {
                     color="info"
                     size="medium"
                     placeholder="Age"
-                    type="number"
                     value={values.Age}
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -197,16 +170,16 @@ export default function CategoryForm(props) {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    name="MaritalStatus"
+                    name="MaritialStatus"
                     label="Marital Status"
                     color="info"
                     size="medium"
                     placeholder="Marital Status"
-                    value={values.MaritalStatus}
+                    value={values.MaritialStatus}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    helperText={touched.MaritalStatus && errors.MaritalStatus}
-                    error={Boolean(touched.MaritalStatus && errors.MaritalStatus)}
+                    helperText={touched.MaritialStatus && errors.MaritialStatus}
+                    error={Boolean(touched.MaritialStatus && errors.MaritialStatus)}
                   />
                 </Grid>
 
@@ -227,169 +200,71 @@ export default function CategoryForm(props) {
                   />
                 </Grid>
 
-                {/* Contact Number */}
+                {/* Mobile No */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    name="ContactNumber"
-                    label="Contact Number"
+                    name="MobileNo"
+                    label="Mobile No"
                     color="info"
                     size="medium"
-                    placeholder="Contact Number"
-                    value={values.ContactNumber}
+                    placeholder="Mobile No"
+                    value={values.MobileNo}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    helperText={touched.ContactNumber && errors.ContactNumber}
-                    error={Boolean(touched.ContactNumber && errors.ContactNumber)}
+                    helperText={touched.MobileNo && errors.MobileNo}
+                    error={Boolean(touched.MobileNo && errors.MobileNo)}
                   />
                 </Grid>
 
-                {/* Email */}
+                {/* Phone Number */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    name="Email"
-                    label="Email"
+                    name="PhoneNumber"
+                    label="Phone Number"
                     color="info"
                     size="medium"
-                    placeholder="Email"
-                    type="email"
-                    value={values.Email}
+                    placeholder="Phone Number"
+                    value={values.PhoneNumber}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    helperText={touched.Email && errors.Email}
-                    error={Boolean(touched.Email && errors.Email)}
-                  />
-                </Grid>
-
-                {/* Company Name */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    name="CompanyName"
-                    label="Company Name"
-                    color="info"
-                    size="medium"
-                    placeholder="Company Name"
-                    value={values.CompanyName}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    helperText={touched.CompanyName && errors.CompanyName}
-                    error={Boolean(touched.CompanyName && errors.CompanyName)}
+                    helperText={touched.PhoneNumber && errors.PhoneNumber}
+                    error={Boolean(touched.PhoneNumber && errors.PhoneNumber)}
                   />
                 </Grid>
 
                 {/* Admission Date */}
                 <Grid item xs={12} sm={6}>
-                  <DatePicker
+                  <TextField
+                    fullWidth
+                    name="AdmissionDate"
                     label="Admission Date"
-                    sx={{ width: "100%" }}
+                    color="info"
+                    size="medium"
+                    placeholder="Admission Date"
                     value={values.AdmissionDate}
-                    onChange={(value) => setFieldValue("AdmissionDate", value)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        color="info"
-                        size="medium"
-                        error={Boolean(touched.AdmissionDate && errors.AdmissionDate)}
-                        helperText={touched.AdmissionDate && errors.AdmissionDate}
-                      />
-                    )}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.AdmissionDate && errors.AdmissionDate}
+                    error={Boolean(touched.AdmissionDate && errors.AdmissionDate)}
                   />
                 </Grid>
 
                 {/* Admission Time */}
                 <Grid item xs={12} sm={6}>
-                  <TimePicker
+                  <TextField
+                    fullWidth
+                    name="AdmissionTime"
                     label="Admission Time"
-                    sx={{ width: "100%" }}
+                    color="info"
+                    size="medium"
+                    placeholder="Admission Time"
                     value={values.AdmissionTime}
-                    onChange={(value) => setFieldValue("AdmissionTime", value)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        color="info"
-                        size="medium"
-                        error={Boolean(touched.AdmissionTime && errors.AdmissionTime)}
-                        helperText={touched.AdmissionTime && errors.AdmissionTime}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                {/* Discharge Date */}
-                <Grid item xs={12} sm={6}>
-                  <DatePicker
-                    label="Discharge Date"
-                    sx={{ width: "100%" }}
-                    value={values.DischargeDate}
-                    onChange={(value) => setFieldValue("DischargeDate", value)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        color="info"
-                        size="medium"
-                        error={Boolean(touched.DischargeDate && errors.DischargeDate)}
-                        helperText={touched.DischargeDate && errors.DischargeDate}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                {/* Discharge Time */}
-                <Grid item xs={12} sm={6}>
-                  <TimePicker
-                    label="Discharge Time"
-                    sx={{ width: "100%" }}
-                    value={values.DischargeTime}
-                    onChange={(value) => setFieldValue("DischargeTime", value)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        color="info"
-                        size="medium"
-                        error={Boolean(touched.DischargeTime && errors.DischargeTime)}
-                        helperText={touched.DischargeTime && errors.DischargeTime}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                {/* Department */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    name="Department"
-                    label="Department"
-                    color="info"
-                    size="medium"
-                    placeholder="Department"
-                    value={values.Department}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    helperText={touched.Department && errors.Department}
-                    error={Boolean(touched.Department && errors.Department)}
-                  />
-                </Grid>
-
-                {/* Bed Name */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    name="BedName"
-                    label="Bed Name"
-                    color="info"
-                    size="medium"
-                    placeholder="Bed Name"
-                    value={values.BedName}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    helperText={touched.BedName && errors.BedName}
-                    error={Boolean(touched.BedName && errors.BedName)}
+                    helperText={touched.AdmissionTime && errors.AdmissionTime}
+                    error={Boolean(touched.AdmissionTime && errors.AdmissionTime)}
                   />
                 </Grid>
 
@@ -410,15 +285,15 @@ export default function CategoryForm(props) {
                   />
                 </Grid>
 
-                {/* Reference Doctor Name */}
+                {/* Ref Doctor Name */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
                     name="RefDoctorName"
-                    label="Reference Doctor Name"
+                    label="Ref Doctor Name"
                     color="info"
                     size="medium"
-                    placeholder="Reference Doctor Name"
+                    placeholder="Ref Doctor Name"
                     value={values.RefDoctorName}
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -427,289 +302,219 @@ export default function CategoryForm(props) {
                   />
                 </Grid>
 
-                {/* Diagnosis */}
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    name="Diagnosis"
-                    label="Diagnosis"
-                    color="info"
-                    size="medium"
-                    placeholder="Diagnosis"
-                    multiline
-                    rows={4}
-                    value={values.Diagnosis}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    helperText={touched.Diagnosis && errors.Diagnosis}
-                    error={Boolean(touched.Diagnosis && errors.Diagnosis)}
-                  />
-                </Grid>
-
-                {/* Treatment */}
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    name="Treatment"
-                    label="Treatment"
-                    color="info"
-                    size="medium"
-                    placeholder="Treatment"
-                    multiline
-                    rows={4}
-                    value={values.Treatment}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    helperText={touched.Treatment && errors.Treatment}
-                    error={Boolean(touched.Treatment && errors.Treatment)}
-                  />
-                </Grid>
-
-                {/* Services */}
-                <Grid item xs={12}>
-                  <FieldArray
-                    name="services"
-                    render={(arrayHelpers) => (
-                      <div>
-                        <h4>Services</h4>
-                        {values.services.map((service, index) => (
-                          <Grid container spacing={3} key={index} alignItems="center">
-                            {/* Service Name */}
-                            <Grid item xs={12} sm={3}>
-                              <TextField
-                                fullWidth
-                                name={`services.${index}.serviceName`}
-                                label="Service Name"
-                                color="info"
-                                size="medium"
-                                placeholder="Service Name"
-                                value={service.serviceName}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                helperText={
-                                  touched.services?.[index]?.serviceName &&
-                                  errors.services?.[index]?.serviceName
-                                }
-                                error={Boolean(
-                                  touched.services?.[index]?.serviceName &&
-                                  errors.services?.[index]?.serviceName
-                                )}
-                              />
-                            </Grid>
-
-                            {/* Service Price */}
-                            <Grid item xs={12} sm={3}>
-                              <TextField
-                                fullWidth
-                                name={`services.${index}.servicePrice`}
-                                label="Service Price"
-                                color="info"
-                                size="medium"
-                                placeholder="Service Price"
-                                type="number"
-                                value={service.servicePrice}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                helperText={
-                                  touched.services?.[index]?.servicePrice &&
-                                  errors.services?.[index]?.servicePrice
-                                }
-                                error={Boolean(
-                                  touched.services?.[index]?.servicePrice &&
-                                  errors.services?.[index]?.servicePrice
-                                )}
-                              />
-                            </Grid>
-
-                            {/* Service Quantity */}
-                            <Grid item xs={12} sm={3}>
-                              <TextField
-                                fullWidth
-                                name={`services.${index}.serviceQty`}
-                                label="Service Quantity"
-                                color="info"
-                                size="medium"
-                                placeholder="Service Quantity"
-                                type="number"
-                                value={service.serviceQty}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                helperText={
-                                  touched.services?.[index]?.serviceQty &&
-                                  errors.services?.[index]?.serviceQty
-                                }
-                                error={Boolean(
-                                  touched.services?.[index]?.serviceQty &&
-                                  errors.services?.[index]?.serviceQty
-                                )}
-                              />
-                            </Grid>
-
-                            {/* Service Total */}
-                            <Grid item xs={12} sm={3}>
-                              <TextField
-                                fullWidth
-                                name={`services.${index}.serviceTotal`}
-                                label="Service Total"
-                                color="info"
-                                size="medium"
-                                placeholder="Service Total"
-                                type="number"
-                                value={service.serviceTotal}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                helperText={
-                                  touched.services?.[index]?.serviceTotal &&
-                                  errors.services?.[index]?.serviceTotal
-                                }
-                                error={Boolean(
-                                  touched.services?.[index]?.serviceTotal &&
-                                  errors.services?.[index]?.serviceTotal
-                                )}
-                              />
-                            </Grid>
-
-                            {/* Delete Service Button */}
-                            <Grid item xs={12} sm={1}>
-                              {values.services.length > 1 && (
-                                <IconButton
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  color="error"
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              )}
-                            </Grid>
-                          </Grid>
-                        ))}
-                        <Button
-                          sx={{ mt: 2 }}
-                          variant="contained"
-                          color="info"
-                          onClick={() =>
-                            arrayHelpers.push({
-                              serviceName: "",
-                              servicePrice: "",
-                              serviceQty: "",
-                              serviceTotal: "",
-                            })
-                          }
-                        >
-                          Add Service
-                        </Button>
-                      </div>
-                    )}
-                  />
-                </Grid>
-
-                {/* Status */}
+                {/* Relative Name */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    name="Status"
-                    label="Status"
+                    name="RelativeName"
+                    label="Relative Name"
                     color="info"
                     size="medium"
-                    placeholder="Status"
-                    value={values.Status}
+                    placeholder="Relative Name"
+                    value={values.RelativeName}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    helperText={touched.Status && errors.Status}
-                    error={Boolean(touched.Status && errors.Status)}
+                    helperText={touched.RelativeName && errors.RelativeName}
+                    error={Boolean(touched.RelativeName && errors.RelativeName)}
                   />
                 </Grid>
 
-                {/* Payment Details */}
-                <Grid item xs={12}>
-                  <FieldArray
-                    name="PaymentDetails"
-                    render={(arrayHelpers) => (
-                      <div>
-                        <h4>Payment Details</h4>
-                        {values.PaymentDetails.map((payment, index) => (
-                          <Grid container spacing={3} key={index} alignItems="center">
-                            {/* Payment Type */}
-                            <Grid item xs={12} sm={5}>
-                              <TextField
-                                fullWidth
-                                name={`PaymentDetails.${index}.PaymentType`}
-                                label="Payment Type"
-                                color="info"
-                                size="medium"
-                                placeholder="Payment Type"
-                                value={payment.PaymentType}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                helperText={
-                                  touched.PaymentDetails?.[index]?.PaymentType &&
-                                  errors.PaymentDetails?.[index]?.PaymentType
-                                }
-                                error={Boolean(
-                                  touched.PaymentDetails?.[index]?.PaymentType &&
-                                  errors.PaymentDetails?.[index]?.PaymentType
-                                )}
-                              />
-                            </Grid>
+                {/* Patient Category */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="PatientCategory"
+                    label="Patient Category"
+                    color="info"
+                    size="medium"
+                    placeholder="Patient Category"
+                    value={values.PatientCategory}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.PatientCategory && errors.PatientCategory}
+                    error={Boolean(touched.PatientCategory && errors.PatientCategory)}
+                  />
+                </Grid>
 
-                            {/* Payment Amount */}
-                            <Grid item xs={12} sm={5}>
-                              <TextField
-                                fullWidth
-                                name={`PaymentDetails.${index}.PaymentAmount`}
-                                label="Payment Amount"
-                                color="info"
-                                size="medium"
-                                placeholder="Payment Amount"
-                                type="number"
-                                value={payment.PaymentAmount}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                helperText={
-                                  touched.PaymentDetails?.[index]?.PaymentAmount &&
-                                  errors.PaymentDetails?.[index]?.PaymentAmount
-                                }
-                                error={Boolean(
-                                  touched.PaymentDetails?.[index]?.PaymentAmount &&
-                                  errors.PaymentDetails?.[index]?.PaymentAmount
-                                )}
-                              />
-                            </Grid>
+                {/* Reimbursement Status */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="isReimbursement"
+                    label="Reimbursement Status"
+                    color="info"
+                    size="medium"
+                    placeholder="Reimbursement Status"
+                    value={values.isReimbursement}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.isReimbursement && errors.isReimbursement}
+                    error={Boolean(touched.isReimbursement && errors.isReimbursement)}
+                  />
+                </Grid>
 
-                            {/* Delete Payment Button */}
-                            <Grid item xs={12} sm={2}>
-                              {values.PaymentDetails.length > 1 && (
-                                <IconButton
-                                  onClick={() => arrayHelpers.remove(index)}
-                                  color="error"
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              )}
-                            </Grid>
-                          </Grid>
-                        ))}
-                        <Button
-                          sx={{ mt: 2 }}
-                          variant="contained"
-                          color="info"
-                          onClick={() =>
-                            arrayHelpers.push({
-                              PaymentType: "",
-                              PaymentAmount: "",
-                            })
-                          }
-                        >
-                          Add Payment
-                        </Button>
-                      </div>
-                    )}
+                {/* MLC No */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="MlcNo"
+                    label="MLC No"
+                    color="info"
+                    size="medium"
+                    placeholder="MLC No"
+                    value={values.MlcNo}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.MlcNo && errors.MlcNo}
+                    error={Boolean(touched.MlcNo && errors.MlcNo)}
+                  />
+                </Grid>
+
+                {/* IP No */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="IpNo"
+                    label="IP No"
+                    color="info"
+                    size="medium"
+                    placeholder="IP No"
+                    value={values.IpNo}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.IpNo && errors.IpNo}
+                    error={Boolean(touched.IpNo && errors.IpNo)}
+                  />
+                </Grid>
+
+                {/* Department Name */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="DepartmentName"
+                    label="Department Name"
+                    color="info"
+                    size="medium"
+                    placeholder="Department Name"
+                    value={values.DepartmentName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.DepartmentName && errors.DepartmentName}
+                    error={Boolean(touched.DepartmentName && errors.DepartmentName)}
+                  />
+                </Grid>
+
+                {/* Company Name */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="CompanyName"
+                    label="Company Name"
+                    color="info"
+                    size="medium"
+                    placeholder="Company Name"
+                    value={values.CompanyName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.CompanyName && errors.CompanyName}
+                    error={Boolean(touched.CompanyName && errors.CompanyName)}
+                  />
+                </Grid>
+
+                {/* Tariff Name */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="TariffName"
+                    label="Tariff Name"
+                    color="info"
+                    size="medium"
+                    placeholder="Tariff Name"
+                    value={values.TariffName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.TariffName && errors.TariffName}
+                    error={Boolean(touched.TariffName && errors.TariffName)}
+                  />
+                </Grid>
+
+                {/* Bed Name */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="BedName"
+                    label="Bed Name"
+                    color="info"
+                    size="medium"
+                    placeholder="Bed Name"
+                    value={values.BedName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.BedName && errors.BedName}
+                    error={Boolean(touched.BedName && errors.BedName)}
+                  />
+                </Grid>
+
+                {/* Relation Name */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="RelationName"
+                    label="Relation Name"
+                    color="info"
+                    size="medium"
+                    placeholder="Relation Name"
+                    value={values.RelationName}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.RelationName && errors.RelationName}
+                    error={Boolean(touched.RelationName && errors.RelationName)}
+                  />
+                </Grid>
+
+                {/* Relation Phone No */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="RelationPhoneNoo"
+                    label="Relation Phone No"
+                    color="info"
+                    size="medium"
+                    placeholder="Relation Phone No"
+                    value={values.RelationPhoneNoo}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.RelationPhoneNoo && errors.RelationPhoneNoo}
+                    error={Boolean(touched.RelationPhoneNoo && errors.RelationPhoneNoo)}
+                  />
+                </Grid>
+
+                {/* Relation Address */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    name="RelationAddress"
+                    label="Relation Address"
+                    color="info"
+                    size="medium"
+                    placeholder="Relation Address"
+                    value={values.RelationAddress}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    helperText={touched.RelationAddress && errors.RelationAddress}
+                    error={Boolean(touched.RelationAddress && errors.RelationAddress)}
                   />
                 </Grid>
 
                 {/* Submit Button */}
                 <Grid item xs={12}>
-                  <Button variant="contained" color="info" type="submit">
-                    Save
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                  >
+                    Submit
                   </Button>
                 </Grid>
               </Grid>
