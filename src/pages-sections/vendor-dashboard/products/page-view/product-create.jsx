@@ -12,7 +12,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PageWrapper from "../../page-wrapper";
-
+import { Addinvoiceipdhandler } from "services/operations/ipdinvoices";
 // FORM FIELDS VALIDATION SCHEMA
 
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -53,7 +53,7 @@ const VALIDATION_SCHEMA = yup.object().shape({
   ),
 });
 
-export default function IpdForm(props) {
+export default function IpdForm() {
   const INITIAL_VALUES = {
     BillNo: "",
     MrNo: "",
@@ -80,8 +80,9 @@ export default function IpdForm(props) {
     PaymentDetails: [{ PaymentType: "", PaymentAmount: "" }],
   };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+   await Addinvoiceipdhandler(values);
+   
   };
 
   return (
