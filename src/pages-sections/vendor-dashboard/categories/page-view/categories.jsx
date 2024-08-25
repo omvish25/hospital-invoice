@@ -31,31 +31,14 @@ import PageWrapper from "../../page-wrapper";
 
 
 // TABLE HEADING DATA LIST
-const tableHeading = [{
-  id: "BillNo",
-  label: "Bill No",
-  align: "left"
-}, {
-  id: "MrNo",
-  label: "Mr No",
-  align: "left"
-}, {
-  id: "PatientName",
-  label: "Patient Name",
-  align: "left"
-}, {
-  id: "DoctorName",
-  label: "Doctor Name",
-  align: "left"
-}, {
-  id: "TotalBillAmount",
-  label: "Total Bill Amount",
-  align: "left"
-}, {
-  id: "action",
-  label: "Action",
-  align: "center"
-}];
+const tableHeading = [
+  { id: "MrNo", label: "MR No", align: "left" },
+  { id: "PatientName", label: "Patient Name", align: "left" },
+  { id: "DoctorName", label: "Doctor Name", align: "left" },
+  { id: "CompanyName", label: "Company Name", align: "left" },
+  { id: "AdmissionDate", label: "Admission Date", align: "left" },
+  { id: "action", label: "Action", align: "center" }
+]; 
 // =============================================================================
 
 

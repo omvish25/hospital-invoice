@@ -6,6 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
+
 // GLOBAL CUSTOM COMPONENT
 
 import BazaarSwitch from "components/BazaarSwitch";

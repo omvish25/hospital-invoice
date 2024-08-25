@@ -12,6 +12,7 @@ import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PageWrapper from "../page-wrapper";
+import { Addinvoiceipdhandler } from "services/operations/ipocaseinvoices";
 
 
 const VALIDATION_SCHEMA = yup.object().shape({
@@ -81,8 +82,9 @@ export default function CategoryForm(props) {
     PaymentDetails: [{ PaymentType: "", PaymentAmount: "" }],
   };
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     console.log(values);
+    await Addinvoiceipdhandler(values);
     // Implement form submission logic here (e.g., API call)
   };
 
@@ -490,7 +492,7 @@ export default function CategoryForm(props) {
                                 }
                                 error={Boolean(
                                   touched.services?.[index]?.serviceName &&
-                                    errors.services?.[index]?.serviceName
+                                  errors.services?.[index]?.serviceName
                                 )}
                               />
                             </Grid>
@@ -514,7 +516,7 @@ export default function CategoryForm(props) {
                                 }
                                 error={Boolean(
                                   touched.services?.[index]?.servicePrice &&
-                                    errors.services?.[index]?.servicePrice
+                                  errors.services?.[index]?.servicePrice
                                 )}
                               />
                             </Grid>
@@ -538,7 +540,7 @@ export default function CategoryForm(props) {
                                 }
                                 error={Boolean(
                                   touched.services?.[index]?.serviceQty &&
-                                    errors.services?.[index]?.serviceQty
+                                  errors.services?.[index]?.serviceQty
                                 )}
                               />
                             </Grid>
@@ -562,7 +564,7 @@ export default function CategoryForm(props) {
                                 }
                                 error={Boolean(
                                   touched.services?.[index]?.serviceTotal &&
-                                    errors.services?.[index]?.serviceTotal
+                                  errors.services?.[index]?.serviceTotal
                                 )}
                               />
                             </Grid>
@@ -644,7 +646,7 @@ export default function CategoryForm(props) {
                                 }
                                 error={Boolean(
                                   touched.PaymentDetails?.[index]?.PaymentType &&
-                                    errors.PaymentDetails?.[index]?.PaymentType
+                                  errors.PaymentDetails?.[index]?.PaymentType
                                 )}
                               />
                             </Grid>
@@ -668,7 +670,7 @@ export default function CategoryForm(props) {
                                 }
                                 error={Boolean(
                                   touched.PaymentDetails?.[index]?.PaymentAmount &&
-                                    errors.PaymentDetails?.[index]?.PaymentAmount
+                                  errors.PaymentDetails?.[index]?.PaymentAmount
                                 )}
                               />
                             </Grid>
