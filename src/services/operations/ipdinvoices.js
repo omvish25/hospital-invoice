@@ -14,13 +14,13 @@ export const Addinvoiceipdhandler = async (data) => {
   toast.dismiss(toastId);
 };
 
-// export const Editadmin = async (data) => {
-//   const toastId = toast.loading("Editing Admin...");
-//   try {
-//     const response = await apiConnector("PUT", EDITADMIN_API, data);
-//     toast.success("Admin Edited successfully");
-//   } catch (error) {
-//   }
-//   toast.dismiss(toastId);
-// };
+export const Editinvoiceipdhandler = async (data) => {
+  const toastId = toast.loading("Editing Invoice...");
+  try {
+    const response = await apiConnector("PUT", EDITINDOORBILL_API, data);
+    toast.success("Invoice Edited successfully");
+  } catch (error) {
+  }
+  toast.dismiss(toastId);
+};
 

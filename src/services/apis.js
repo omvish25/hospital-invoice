@@ -7,6 +7,7 @@ export const IndoorBillsEndpoints = {
   GETSEARCHIPDBILLS_API: BASE_URL + "/searchipdbills",
   EDITINDOORBILL_API: BASE_URL + "/editindoorbill",
   DELETEINDOORBILL_API: BASE_URL + "/deleteindoorbill",
+  GETINDOORBILLBYID_API: BASE_URL + "/getindoorbillbyid",
 }
 export const IpdCaseEndpoints = {
   CREATEIPDCASE_API: BASE_URL + "/createindoorcasepaper",

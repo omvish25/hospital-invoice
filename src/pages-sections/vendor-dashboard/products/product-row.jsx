@@ -60,7 +60,7 @@ export default function ProductRow({
     </StyledTableCell>
 
     <StyledTableCell align="center">
-      <StyledIconButton onClick={() => router.push(`/admin/products/${slug}`)}>
+      <StyledIconButton onClick={() => router.push(`/admin/products/${id}`)}>
         <Edit />
       </StyledIconButton>
 
