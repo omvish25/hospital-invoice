@@ -65,6 +65,7 @@ export default function ProductRow({ product }) {
     const formatedDodTime = formatDate(DodTime)
     const handleDownloadPdf = () => {
         const doc = new jsPDF();
+        const scale = 2;
         const servicesRows = services.map((service) => `
         <tr>
             <td style="text-align: left;">${service.serviceName}</td>
@@ -92,10 +93,12 @@ export default function ProductRow({ product }) {
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+             letter-spacing: 1px;
         }
         .container {
             width: 100%;
-            max-width: 1500px;
+            max-width: 1300px;
+            height: 3,508px;
             margin: auto;
             border: 1px solid #000;
             padding: 20px;
@@ -329,18 +332,39 @@ export default function ProductRow({ product }) {
 
     `;
 
-        // Create a temporary DOM element to hold the HTML content
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = htmlContent;
-        document.body.appendChild(tempDiv);
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlContent;
+    document.body.appendChild(tempDiv);
 
-        // Use html2canvas to convert the HTML to a canvas
-        html2canvas(tempDiv).then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
-            doc.addImage(imgData, "PNG", 0, 0, 210, 297);
-            doc.save(`hospital-bill-${BillNo}.pdf`);
-            document.body.removeChild(tempDiv);
+    const opt = {
+        scale: scale,
+        useCORS: true,
+        logging: true
+    };
+
+    html2canvas(tempDiv, {
+        scale: 4,  // Increase scale for higher resolution
+        useCORS: true,
+        logging: true,
+    }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        
+        const imgWidth = 210; // A4 width in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
+        
+        const doc = new jsPDF({
+            orientation: imgHeight > 297 ? 'portrait' : 'landscape', // Adjust orientation based on aspect ratio
+            unit: 'mm',
+            format: [imgWidth, imgHeight], // Dynamic format based on content
         });
+    
+        doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST'); // or 'NONE' for no compression
+    
+        doc.save(`hospital-bill-${BillNo}.pdf`);
+        
+        document.body.removeChild(tempDiv);
+    });
+    
     };
 
     return (
