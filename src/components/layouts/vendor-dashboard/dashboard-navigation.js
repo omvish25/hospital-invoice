@@ -20,10 +20,10 @@ export const navigation = [{
   name: "Case Paper",
   icon: duotone.Accounts,
   children: [{
-    name: "Category List",
+    name: "Manage Case Paper",
     path: "/admin/categories"
   }, {
-    name: "Create Category",
+    name: "Create Case Paper",
     path: "/admin/categories/create"
   }]
 }, {

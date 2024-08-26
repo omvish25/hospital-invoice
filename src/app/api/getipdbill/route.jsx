@@ -7,9 +7,9 @@ export async function GET(request) {
     const page = parseInt(searchParams.get('page')) || 1;
     try {
         await connectToDatabase();
-        const limit = 2; 
+        const limit = 15; 
         const skip = (page - 1) * limit;
-        const ipdBills = await Ipd.find().skip(skip).limit(limit).exec();
+        const ipdBills = await Ipd.find().sort({ createdAt: -1 }).skip(skip).limit(limit).exec();
         const totalRecords = await Ipd.countDocuments();
         return NextResponse.json({
             ipdBills,

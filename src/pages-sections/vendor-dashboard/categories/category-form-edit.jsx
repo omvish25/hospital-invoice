@@ -116,7 +116,7 @@ export default function CategoryForm(props) {
         return <p>Loading...</p>;
     }
     return (
-        <PageWrapper title="Create IpdCase">
+        <PageWrapper title="Edit Case Paper">
             <Card className="p-3">
                 <Formik
                     onSubmit={handleFormSubmit}

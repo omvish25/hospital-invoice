@@ -141,12 +141,12 @@ export default function CategoriesPageView({
   return <PageWrapper title="IPD Bill List">
     <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap">
       <SearchInput
-        placeholder="Search Invoices..."
+        placeholder="Search Case Paper..."
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
       <Button
-        href="/admin/products/create"
+        href="/admin/categories/create"
         color="info"
         fullWidth={downSM}
         variant="contained"
@@ -156,7 +156,7 @@ export default function CategoriesPageView({
           minHeight: 44,
         }}
       >
-        Add IPD Bill
+        Add Case Paper
       </Button>
     </FlexBox>
     <Card>
