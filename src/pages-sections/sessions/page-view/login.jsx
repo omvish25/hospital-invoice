@@ -14,7 +14,9 @@ import usePasswordVisible from "../use-password-visible";
 import BazaarTextField from "components/BazaarTextField"; 
 // ==============================================================
 
-
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 // ==============================================================
 const LoginPageView = ({
   closeDialog
@@ -24,7 +26,7 @@ const LoginPageView = ({
     togglePasswordVisible
   } = usePasswordVisible(); 
 // LOGIN FORM FIELDS INITIAL VALUES
-
+const router = useRouter();
   const initialValues = {
     email: "",
     password: ""
@@ -45,8 +47,18 @@ const LoginPageView = ({
   } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: values => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+    });
+    if (result?.error) {
+      setError('Invalid credentials. Please try again.');
+  } else {
+      router.push('/vendor/dashboard'); 
+  }
+    console.log(result)
       closeDialog?.();
     }
   });
