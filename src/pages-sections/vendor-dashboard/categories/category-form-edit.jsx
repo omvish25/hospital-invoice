@@ -272,16 +272,17 @@ export default function CategoryForm(props) {
 
                                 {/* Admission Date */}
                                 <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        name="AdmissionDate"
+                                    <DatePicker
                                         label="Admission Date"
+                                        sx={{ width: "100%" }}
                                         color="info"
                                         size="medium"
                                         placeholder="Admission Date"
-                                        value={values.AdmissionDate}
+                                        value={values.AdmissionDate || null}  // Ensure the value is a valid date or null
                                         onBlur={handleBlur}
-                                        onChange={handleChange}
+                                        onChange={(newDate) => {
+                                            setFieldValue("AdmissionDate", newDate);  // Update form state with the new date
+                                        }}
                                         helperText={touched.AdmissionDate && errors.AdmissionDate}
                                         error={Boolean(touched.AdmissionDate && errors.AdmissionDate)}
                                     />
@@ -289,19 +290,21 @@ export default function CategoryForm(props) {
 
                                 {/* Admission Time */}
                                 <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        name="AdmissionTime"
+                                    <TimePicker
                                         label="Admission Time"
+                                        sx={{ width: "100%" }}
                                         color="info"
-                                        size="medium"
+                                        size="large"
                                         placeholder="Admission Time"
-                                        value={values.AdmissionTime}
+                                        value={values.AdmissionTime || null}  // Ensure the value is a valid time or null
                                         onBlur={handleBlur}
-                                        onChange={handleChange}
+                                        onChange={(newTime) => {
+                                            setFieldValue("AdmissionTime", newTime);  // Update form state with the new time
+                                        }}
                                         helperText={touched.AdmissionTime && errors.AdmissionTime}
                                         error={Boolean(touched.AdmissionTime && errors.AdmissionTime)}
                                     />
+
                                 </Grid>
 
                                 {/* Doctor Name */}
@@ -318,6 +321,37 @@ export default function CategoryForm(props) {
                                         onChange={handleChange}
                                         helperText={touched.DoctorName && errors.DoctorName}
                                         error={Boolean(touched.DoctorName && errors.DoctorName)}
+                                    />
+                                </Grid>
+                                {/* Doctor Name */}
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        name="SecondDoctorName"
+                                        label="Doctor Name 2"
+                                        color="info"
+                                        size="medium"
+                                        placeholder="Doctor Name"
+                                        value={values.SecondDoctorName}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        helperText={touched.SecondDoctorName && errors.SecondDoctorName}
+                                        error={Boolean(touched.SecondDoctorName && errors.SecondDoctorName)}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        fullWidth
+                                        name="ThirdDoctorName"
+                                        label="Doctor Name 3"
+                                        color="info"
+                                        size="medium"
+                                        placeholder="Doctor Name"
+                                        value={values.ThirdDoctorName}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        helperText={touched.ThirdDoctorName && errors.ThirdDoctorName}
+                                        error={Boolean(touched.ThirdDoctorName && errors.ThirdDoctorName)}
                                     />
                                 </Grid>
 

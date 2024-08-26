@@ -18,7 +18,6 @@ import { StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } fr
 
 // ========================================================================
 export default function CategoryRow({ caseData }) {
-  console.log("caseData", caseData);
   const {
     MrNo,
     PatientName,
@@ -39,7 +38,10 @@ export default function CategoryRow({ caseData }) {
       <StyledTableCell align="left">{PatientName}</StyledTableCell>
       <StyledTableCell align="left">{DoctorName}</StyledTableCell>
       <StyledTableCell align="left">{CompanyName}</StyledTableCell>
-      <StyledTableCell align="left">{AdmissionDate}</StyledTableCell>
+      <StyledTableCell align="left">
+        {new Date(AdmissionDate).toLocaleDateString('en-CA')}  {/* 'en-CA' for YYYY-MM-DD format */}
+      </StyledTableCell>
+
 
       <StyledTableCell align="center">
         <StyledIconButton onClick={() => router.push(`/admin/categories/${id}`)}>
