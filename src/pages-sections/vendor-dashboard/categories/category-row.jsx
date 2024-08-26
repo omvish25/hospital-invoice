@@ -166,7 +166,7 @@ export default function CategoryRow({ caseData }) {
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Refd. Doctor Name</strong> </td>
-            <td style="padding: 5px;"> : ${caseData.RefDoctorName }</td>
+            <td style="padding: 5px;"> : ${caseData.RefDoctorName}</td>
             <td style="padding: 5px;"><strong>Relative Phone No</strong> </td>
             <td style="padding: 5px;"> : ${caseData.RelationPhoneNoo}</td>
           
@@ -190,7 +190,7 @@ export default function CategoryRow({ caseData }) {
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Is Reimbursement</strong> </td>
-      <td style="padding: 5px;"> : ${caseData.isReimbursement }</td>
+      <td style="padding: 5px;"> : ${caseData.isReimbursement}</td>
       <td style="padding: 5px;"></td>
       <td style="padding: 5px;"></td>
         </tr>
@@ -227,11 +227,26 @@ export default function CategoryRow({ caseData }) {
         tempDiv.innerHTML = htmlContent;
         document.body.appendChild(tempDiv);
 
-        // Use html2canvas to convert the HTML to a canvas
-        html2canvas(tempDiv).then((canvas) => {
+        html2canvas(tempDiv, {
+            scale: 4,  // Increase scale for higher resolution
+            useCORS: true,
+            logging: true,
+        }).then((canvas) => {
             const imgData = canvas.toDataURL("image/png");
-            doc.addImage(imgData, "PNG", 0, 0, 210, 297);
-            doc.save(`hospital-casepaper-${MrNo}.pdf`);
+
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
+
+            const doc = new jsPDF({
+                orientation: imgHeight > 297 ? 'portrait' : 'landscape', // Adjust orientation based on aspect ratio
+                unit: 'mm',
+                format: [imgWidth, imgHeight], // Dynamic format based on content
+            });
+
+            doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST'); // or 'NONE' for no compression
+
+            doc.save(`hospital-MrNo-${MrNo}.pdf`);
+
             document.body.removeChild(tempDiv);
         });
     };

@@ -1,5 +1,6 @@
 
 export const BASE_URL = "https://hospital-invoice.vercel.app/api";
+// export const BASE_URL = "http://localhost:3000/api";
 
 export const IndoorBillsEndpoints = {
   CREATEINDOORBILL_API: BASE_URL + "/createindoorbill",
