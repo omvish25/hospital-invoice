@@ -21,8 +21,7 @@ import dayjs from "dayjs";
 // FORM FIELDS VALIDATION SCHEMA
 
 const VALIDATION_SCHEMA = yup.object().shape({
-  BillNo: yup.string().required("Bill No is required!"),
-  MrNo: yup.string().required("MR No is required!"),
+ 
   PatientName: yup.string().required("Patient Name is required!"),
   DoctorName: yup.string().required("Doctor Name is required!"),
   PatientType: yup.string().required("Patient Type is required!"),
@@ -83,8 +82,6 @@ export default function IpdForm() {
   const parseDate = (dateString) => (dateString ? dayjs(dateString) : null);
 
   const INITIAL_VALUES = {
-    BillNo: bill?.BillNo || "",
-    MrNo: bill?.MrNo || "",
     PatientName: bill?.PatientName || "",
     DoctorName: bill?.DoctorName || "",
     PatientType: bill?.PatientType || "",
@@ -130,36 +127,7 @@ export default function IpdForm() {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  name="BillNo"
-                  label="Bill No"
-                  color="info"
-                  size="medium"
-                  placeholder="Bill No"
-                  value={values.BillNo}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  helperText={touched.BillNo && errors.BillNo}
-                  error={Boolean(touched.BillNo && errors.BillNo)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  name="MrNo"
-                  label="MR No"
-                  color="info"
-                  size="medium"
-                  placeholder="MR No"
-                  value={values.MrNo}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  helperText={touched.MrNo && errors.MrNo}
-                  error={Boolean(touched.MrNo && errors.MrNo)}
-                />
-              </Grid>
+         
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
