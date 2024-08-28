@@ -20,36 +20,37 @@ import { StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } fr
 
 // ========================================================================
 export default function CategoryRow({ caseData }) {
-  const {
-    MrNo,
-    PatientName,
-    DoctorName,
-    CompanyName,
-    AdmissionDate,
-    id,
-    published,
-    slug
-  } = caseData || {};
+    console.log("caseData", caseData);
+    const {
+        MrNo,
+        PatientName,
+        DoctorName,
+        CompanyName,
+        AdmissionDate,
+        id,
+        published,
+        slug
+    } = caseData || {};
 
-  const router = useRouter();
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    let hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    const formattedDate = `${day}/${month}/${year} ${hours}:${minutes} ${ampm}`;
-    return formattedDate;
-};
+    const router = useRouter();
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        let hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        const formattedDate = `${day}/${month}/${year} ${hours}:${minutes} ${ampm}`;
+        return formattedDate;
+    };
 
-const handleDownloadPdf = () => {
-  const doc = new jsPDF();
- 
-  const htmlContent = `
+    const handleDownloadPdf = () => {
+        const doc = new jsPDF();
+
+        const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,107 +84,105 @@ const handleDownloadPdf = () => {
 
     </div>
 
-   
-
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
         <tr style="width: 100%;">
             <td style="padding: 5px; "><strong>MR. No</strong> </td>
-            <td style="padding: 5px;">: 3367</td>
+            <td style="padding: 5px;">: ${MrNo}</td>
             <td style="padding: 5px; "><strong>Gender</strong> </td>
-            <td style="padding: 5px;"> : Male</td>
+            <td style="padding: 5px;"> : ${caseData.Sex}</td>
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Patient Name</strong> </td>
-            <td style="padding: 5px;">: Mr Nagorao Dudhbhate</td>
+            <td style="padding: 5px;">: ${caseData.PatientName}</td>
             <td style="padding: 5px;"><strong>Marital Status</strong> </td>
-            <td style="padding: 5px;"> : Married</td>
+            <td style="padding: 5px;"> : ${caseData.MaritialStatus}</td>
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Age</strong> </td>
-            <td style="padding: 5px;"> : 75</td>
+            <td style="padding: 5px;"> : ${caseData.Age}</td>
            
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Address</strong></td>
-            <td style="padding: 5px;"> : shiradhon</td>
+            <td style="padding: 5px;"> : ${caseData.Address}</td>
          
            
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Mobile No</strong></td>
-            <td style="padding: 5px;">: </td>
+            <td style="padding: 5px;">${caseData.MobileNo} </td>
             <td style="padding: 5px;"><strong>MLC No</strong></td>
-            <td style="padding: 5px;"> : </td>
+            <td style="padding: 5px;"> ${caseData.MlcNo} </td>
            
           
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Phone No</strong></td>
-            <td style="padding: 5px;">: 9850188200</td>
+            <td style="padding: 5px;">: ${caseData.PhoneNumber}</td>
             <td style="padding: 5px;"><strong>Admission Time</strong></td>
-            <td style="padding: 5px;"> : 12:20AM</td>
+            <td style="padding: 5px;"> : ${new Date(caseData.AdmissionTime).toLocaleDateString('en-CA')}</td>
         
            
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Admission Date</strong></td>
-            <td style="padding: 5px;"> : 02/07/2024</td>
+            <td style="padding: 5px;"> :${new Date(AdmissionDate).toLocaleDateString('en-CA')}</td>
             <td style="padding: 5px;"><strong>Department Name</strong> </td>
-            <td style="padding: 5px;"> : General Medicine</td>
+            <td style="padding: 5px;"> : ${caseData.DepartmentName}</td>
            
            
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>IP No</strong></td>
-            <td style="padding: 5px;">: IP/326/2024</td>
+            <td style="padding: 5px;">: ${caseData.IpNo}</td>
             <td style="padding: 5px;"><strong>Company Name</strong>  </td>
-            <td style="padding: 5px;"> : </td>
+            <td style="padding: 5px;"> :${caseData.CompanyName} </td>
           
          
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Doctor Name</strong></td>
-            <td style="padding: 5px;"> : Dr. Amit Patil</td>
+            <td style="padding: 5px;"> : ${caseData.DoctorName}</td>
             <td style="padding: 5px;"><strong>Tariff Name</strong> </td>
-            <td style="padding: 5px;"> : Cash</td>
+            <td style="padding: 5px;"> : ${caseData.TariffName}</td>
           
           
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Doctor Name 2</strong> </td>
-            <td style="padding: 5px;"> : </td>
+            <td style="padding: 5px;"> :${caseData.SecondDoctorName} </td>
             <td style="padding: 5px;"><strong>Bed Name</strong> </td>
-            <td style="padding: 5px;"> : 3 ICU 1</td>
+            <td style="padding: 5px;"> : ${caseData.BedName} 1</td>
             
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Doctor Name 3</strong>  </td>
-            <td style="padding: 5px;">: </td>
+            <td style="padding: 5px;">:${caseData.ThirdDoctorName} </td>
             <td style="padding: 5px;"><strong>Relationship Name</strong> </td>
-            <td style="padding: 5px;"> : uncle</td>
+            <td style="padding: 5px;"> :${caseData.RelationName}</td>
           
          
           
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Refd. Doctor Name</strong> </td>
-            <td style="padding: 5px;"> : </td>
+            <td style="padding: 5px;"> : ${caseData.RefDoctorName}</td>
             <td style="padding: 5px;"><strong>Relative Phone No</strong> </td>
-            <td style="padding: 5px;"> : 9850188200</td>
+            <td style="padding: 5px;"> : ${caseData.RelationPhoneNoo}</td>
           
        
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Relative Name</strong> </td>
-            <td style="padding: 5px;"> : </td>
+            <td style="padding: 5px;"> :${caseData.RelationName} </td>
             <td style="padding: 5px;"><strong>Relative Address</strong> </td>
-            <td style="padding: 5px;"> : shiradhon</td>
+            <td style="padding: 5px;"> : ${caseData.RelationAddress}</td>
          
           
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Patient Category</strong> </td>
-            <td style="padding: 5px;"> : Self</td>
+            <td style="padding: 5px;"> : ${caseData.PatientCategory}</td>
             <td style="padding: 5px;"><strong></strong> </td>
             <td style="padding: 5px;"></td>
            
@@ -191,7 +190,7 @@ const handleDownloadPdf = () => {
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Is Reimbursement</strong> </td>
-      <td style="padding: 5px;"> : Yes</td>
+      <td style="padding: 5px;"> : ${caseData.isReimbursement}</td>
       <td style="padding: 5px;"></td>
       <td style="padding: 5px;"></td>
         </tr>
@@ -223,45 +222,60 @@ const handleDownloadPdf = () => {
 
 `;
 
-  // Create a temporary DOM element to hold the HTML content
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = htmlContent;
-  document.body.appendChild(tempDiv);
+        // Create a temporary DOM element to hold the HTML content
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = htmlContent;
+        document.body.appendChild(tempDiv);
 
-  // Use html2canvas to convert the HTML to a canvas
-  html2canvas(tempDiv).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      doc.addImage(imgData, "PNG", 0, 0, 210, 297);
-      doc.save(`hospital-casepaper-${MrNo}.pdf`);
-      document.body.removeChild(tempDiv);
-  });
-};
-  const [casePublish, setCasePublish] = useState(published);
+        html2canvas(tempDiv, {
+            scale: 4,  // Increase scale for higher resolution
+            useCORS: true,
+            logging: true,
+        }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
 
-  return (
-    <StyledTableRow tabIndex={-1} role="checkbox">
-      <StyledTableCell align="left">{MrNo}</StyledTableCell>
-      <StyledTableCell align="left">{PatientName}</StyledTableCell>
-      <StyledTableCell align="left">{DoctorName}</StyledTableCell>
-      <StyledTableCell align="left">{CompanyName}</StyledTableCell>
-      <StyledTableCell align="left">
-        {new Date(AdmissionDate).toLocaleDateString('en-CA')}  {/* 'en-CA' for YYYY-MM-DD format */}
-      </StyledTableCell>
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
+
+            const doc = new jsPDF({
+                orientation: imgHeight > 297 ? 'portrait' : 'landscape', // Adjust orientation based on aspect ratio
+                unit: 'mm',
+                format: [imgWidth, imgHeight], // Dynamic format based on content
+            });
+
+            doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST'); // or 'NONE' for no compression
+
+            doc.save(`hospital-MrNo-${MrNo}.pdf`);
+
+            document.body.removeChild(tempDiv);
+        });
+    };
+    const [casePublish, setCasePublish] = useState(published);
+
+    return (
+        <StyledTableRow tabIndex={-1} role="checkbox">
+            <StyledTableCell align="left">{MrNo}</StyledTableCell>
+            <StyledTableCell align="left">{PatientName}</StyledTableCell>
+            <StyledTableCell align="left">{DoctorName}</StyledTableCell>
+            <StyledTableCell align="left">{CompanyName}</StyledTableCell>
+            <StyledTableCell align="left">
+                {new Date(AdmissionDate).toLocaleDateString('en-CA')}  {/* 'en-CA' for YYYY-MM-DD format */}
+            </StyledTableCell>
 
 
-      <StyledTableCell align="center">
-        <StyledIconButton onClick={() => router.push(`/admin/categories/${id}`)}>
-          <Edit />
-        </StyledIconButton>
+            <StyledTableCell align="center">
+                <StyledIconButton onClick={() => router.push(`/admin/categories/${id}`)}>
+                    <Edit />
+                </StyledIconButton>
 
-        <StyledIconButton onClick={handleDownloadPdf}>
-          <RemoveRedEye />
-        </StyledIconButton>
+                <StyledIconButton onClick={handleDownloadPdf}>
+                    <RemoveRedEye />
+                </StyledIconButton>
 
-        <StyledIconButton>
-          <Delete />
-        </StyledIconButton>
-      </StyledTableCell>
-    </StyledTableRow>
-  );
+                <StyledIconButton>
+                    <Delete />
+                </StyledIconButton>
+            </StyledTableCell>
+        </StyledTableRow>
+    );
 }
