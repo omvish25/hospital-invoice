@@ -20,8 +20,7 @@ export async function PUT(request) {
         console.log('ID:', _id);
         const updateFields = {};
 
-        // Add fields to the update object only if they are provided in the request body
-        if (body.MrNo) updateFields.MrNo = body.MrNo;
+  
         if (body.PatientName) updateFields.PatientName = body.PatientName;
         if (body.Age) updateFields.Age = body.Age;
         if (body.Sex) updateFields.Sex = body.Sex;

@@ -19,7 +19,7 @@ import axios from "axios";
 
 
 const VALIDATION_SCHEMA = yup.object().shape({
-    MrNo: yup.string().required("MR No is required!"),
+  
     PatientName: yup.string(),
     Age: yup.string().required("Age is required!"),
     Sex: yup.string().required("Sex is required!"),
@@ -74,7 +74,7 @@ export default function CategoryForm(props) {
     }, []);
 
     const INITIAL_VALUES = {
-        MrNo: currentCategoryData?.MrNo || "",
+       
         PatientName: currentCategoryData?.PatientName || "",
         Age: currentCategoryData?.Age || "",
         Sex: currentCategoryData?.Sex || "",
@@ -134,23 +134,7 @@ export default function CategoryForm(props) {
                     }) => (
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={3}>
-                                {/* MR Number */}
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        name="MrNo"
-                                        label="MR No"
-                                        color="info"
-                                        size="medium"
-                                        placeholder="MR No"
-                                        value={values.MrNo}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        helperText={touched.MrNo && errors.MrNo}
-                                        error={Boolean(touched.MrNo && errors.MrNo)}
-                                    />
-                                </Grid>
-
+                                
                                 {/* Patient Name */}
                                 <Grid item xs={12} sm={6}>
                                     <TextField
