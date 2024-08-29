@@ -9,7 +9,7 @@ export async function POST(request) {
         const body = await request.json();
 
         const {
-            MrNo,
+    
             PatientName,
             Age,
             Sex,
@@ -36,9 +36,13 @@ export async function POST(request) {
             RelationPhoneNoo,
             RelationAddress,
         } = body;
+        
+        const lastIpdCase = await IpdCase.findOne().sort({ MrNo: -1 });
+        const newMrNoNumber = lastIpdCase ? parseInt(lastIpdCase.MrNo.split('-')[1]) + 1 : 1;
+        const newMrNo = `MR-${newMrNoNumber}`;
 
         const newIpdCasePaper = new IpdCase({
-            MrNo,
+            MrNo : newMrNo,
             PatientName,
             Age,
             Sex,

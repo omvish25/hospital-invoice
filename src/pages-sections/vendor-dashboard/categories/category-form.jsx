@@ -15,7 +15,7 @@ import PageWrapper from "../page-wrapper";
 import { Addinvoiceipdhandler } from "services/operations/ipocaseinvoices";
 
 const VALIDATION_SCHEMA = yup.object().shape({
-  MrNo: yup.string().required("MR No is required!"),
+ 
   PatientName: yup.string(),
   Age: yup.string().required("Age is required!"),
   Sex: yup.string().required("Sex is required!"),
@@ -45,7 +45,7 @@ const VALIDATION_SCHEMA = yup.object().shape({
 
 export default function CategoryForm(props) {
   const INITIAL_VALUES = {
-    MrNo: "",
+   
     PatientName: "",
     Age: "",
     Sex: "",
@@ -99,21 +99,7 @@ export default function CategoryForm(props) {
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 {/* MR Number */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    name="MrNo"
-                    label="MR No"
-                    color="info"
-                    size="medium"
-                    placeholder="MR No"
-                    value={values.MrNo}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    helperText={touched.MrNo && errors.MrNo}
-                    error={Boolean(touched.MrNo && errors.MrNo)}
-                  />
-                </Grid>
+               
 
                 {/* Patient Name */}
                 <Grid item xs={12} sm={6}>
