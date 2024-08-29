@@ -3,12 +3,12 @@ import connectToDatabase from '../../lib/utils';
 import { IpdCase } from '../../lib/models';
 
 export async function DELETE(request) {
+    const { searchParams } = new URL(request.url);
     try {
         // Connect to the database
         await connectToDatabase();
 
         // Extract the ID of the document to be deleted from the query parameters
-        const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
 
         if (!id) {

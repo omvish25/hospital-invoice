@@ -18,7 +18,7 @@ export async function GET(request) {
         // Build the search query to match any of the possible fields
         const query = {
             $or: [
-                { MrNo: data },
+                { MrNo:  { $regex: new RegExp(data, 'i') } } ,
                 { PatientName: { $regex: new RegExp(data, 'i') } }, // Case-insensitive search
                 { MobileNo: data },
                 { CompanyName: { $regex: new RegExp(data, 'i') } }, // Case-insensitive search
