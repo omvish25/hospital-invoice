@@ -75,7 +75,7 @@ export default function CategoryRow({ caseData }) {
  <div class="container">
     <div style=" padding-left: 5rem; padding-right: 5rem;">
     <div style="text-align: center;  padding-bottom: 10px;">
-        <h2 style="margin: 0;">OM MULTISPECIALITY HOSPITAL</h2>
+<h2 style="margin: 0;">OM VISHVEKAR SUPERSPECIALITY HOSPITAL</h2>
         <p style="margin: 5px 0;">New Arogya Nagar, Omerga, Dist- Osmanabad Pin- 413606</p>
         <p style="margin: 5px 0;">Call: 06009460096</p>
     </div>
@@ -198,7 +198,7 @@ export default function CategoryRow({ caseData }) {
     </table>
 
     <p style="font-size: 14px;">
-        I hereby give consent for the hospitalization of me/my <strong>uncle</strong>. I have been explained 
+        I hereby give consent for the hospitalization of me/my <strong>_______________________________________________________________</strong>. I have been explained 
         about the nature of the illness and the need for hospitalization in a language easily understood by me. I hereby give consent for 
         the necessary investigations and procedures as may be found necessary during the hospital stay. The consent being given after 
         full knowledge of the nature of the illness. I/we agree to abide by the schedule of charges and rules and regulations of the 

@@ -20,13 +20,13 @@ export async function POST(request) {
         
         // Auto-generate BillNo and MrNo
         const BillNo = await generateAutoIncrementedValue('BillNo', 'BILL-');
-        const MrNo = await generateAutoIncrementedValue('MrNo', 'MR-');
+        const IpdNo = await generateAutoIncrementedValue('IpdNo', 'IPD-');
 
         const { 
             PatientName, 
             DoctorName, 
-            PatientType, 
-            IpdNo, 
+            MrNo,
+            PatientType,  
             Age, 
             Sex, 
             BillDate, 

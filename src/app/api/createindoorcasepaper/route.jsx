@@ -9,7 +9,6 @@ export async function POST(request) {
         const body = await request.json();
 
         const {
-    
             PatientName,
             Age,
             Sex,
@@ -18,7 +17,6 @@ export async function POST(request) {
             MobileNo,
             PhoneNumber,
             AdmissionDate,
-            IpNo,
             DoctorName,
             SecondDoctorName,
             ThirdDoctorName,
@@ -35,14 +33,22 @@ export async function POST(request) {
             RelationName,
             RelationPhoneNoo,
             RelationAddress,
+            AdvanceAmount
         } = body;
-        
+
+        // Generate the MrNo
         const lastIpdCase = await IpdCase.findOne().sort({ MrNo: -1 });
         const newMrNoNumber = lastIpdCase ? parseInt(lastIpdCase.MrNo.split('-')[1]) + 1 : 1;
         const newMrNo = `MR-${newMrNoNumber}`;
 
+        // Generate the IpNo
+        const lastIpNoCase = await IpdCase.findOne().sort({ IpNo: -1 });
+        const newIpNoNumber = lastIpNoCase ? parseInt(lastIpNoCase.IpNo.split('-')[1]) + 1 : 1;
+        const newIpNo = `IP-${newIpNoNumber}`;
+
         const newIpdCasePaper = new IpdCase({
-            MrNo : newMrNo,
+            MrNo: newMrNo,
+            IpNo: newIpNo, // Assign the auto-generated IpNo here
             PatientName,
             Age,
             Sex,
@@ -51,7 +57,6 @@ export async function POST(request) {
             MobileNo,
             PhoneNumber,
             AdmissionDate,
-            IpNo,
             DoctorName,
             SecondDoctorName,
             ThirdDoctorName,
@@ -68,6 +73,7 @@ export async function POST(request) {
             RelationName,
             RelationPhoneNoo,
             RelationAddress,
+            AdvanceAmount
         });
 
         // Save the document to the database

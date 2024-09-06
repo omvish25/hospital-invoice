@@ -46,6 +46,10 @@ export async function PUT(request) {
         if (body.RelationName) updateFields.RelationName = body.RelationName;
         if (body.RelationPhoneNoo) updateFields.RelationPhoneNoo = body.RelationPhoneNoo;
         if (body.RelationAddress) updateFields.RelationAddress = body.RelationAddress;
+        if (body.AdvanceAmount) updateFields.AdvanceAmount = body.AdvanceAmount;
+
+
+        
 
         // Update the document in the database
         const updatedIpdCasePaper = await IpdCase.findByIdAndUpdate(_id, updateFields, { new: true });

@@ -21,30 +21,29 @@ import axios from "axios";
 const VALIDATION_SCHEMA = yup.object().shape({
   
     PatientName: yup.string(),
-    Age: yup.string().required("Age is required!"),
-    Sex: yup.string().required("Sex is required!"),
+    Age: yup.string(),
+    Sex: yup.string(),
     MaritialStatus: yup.string(),
     Address: yup.string(),
     MobileNo: yup.string(),
     PhoneNumber: yup.string(),
     AdmissionDate: yup.string(),
-    IpNo: yup.string(),
     DoctorName: yup.string(),
     SecondDoctorName: yup.string(),
     ThirdDoctorName: yup.string(),
     RefDoctorName: yup.string(),
     RelativeName: yup.string(),
     PatientCategory: yup.string(),
-    isReimbursement: yup.string().required("Reimbursement status is required!"),
-    MlcNo: yup.string().required("MLC No is required!"),
-    AdmissionTime: yup.string().required("Admission Time is required!"),
-    DepartmentName: yup.string().required("Department Name is required!"),
-    CompanyName: yup.string().required("Company Name is required!"),
-    TariffName: yup.string().required("Tariff Name is required!"),
-    BedName: yup.string().required("Bed Name is required!"),
-    RelationName: yup.string().required("Relation Name is required!"),
-    RelationPhoneNoo: yup.string().required("Relation Phone No is required!"),
-    RelationAddress: yup.string().required("Relation Address is required!"),
+    isReimbursement: yup.string(),
+    MlcNo: yup.string(),
+    AdmissionTime: yup.string(),
+    DepartmentName: yup.string(),
+    CompanyName: yup.string(),
+    TariffName: yup.string(),
+    BedName: yup.string(),
+    RelationName: yup.string(),
+    RelationPhoneNoo: yup.string(),
+    RelationAddress: yup.string(),
 });
 
 
@@ -83,7 +82,6 @@ export default function CategoryForm(props) {
         MobileNo: currentCategoryData?.MobileNo || "",
         PhoneNumber: currentCategoryData?.PhoneNumber || "",
         AdmissionDate: currentCategoryData?.AdmissionDate || "",
-        IpNo: currentCategoryData?.IpNo || "",
         DoctorName: currentCategoryData?.DoctorName || "",
         SecondDoctorName: currentCategoryData?.SecondDoctorName || "",
         ThirdDoctorName: currentCategoryData?.ThirdDoctorName || "",
@@ -100,6 +98,7 @@ export default function CategoryForm(props) {
         RelationName: currentCategoryData?.RelationName || "",
         RelationPhoneNoo: currentCategoryData?.RelationPhoneNoo || "",
         RelationAddress: currentCategoryData?.RelationAddress || "",
+        AdvanceAmount: currentCategoryData?.AdvanceAmount || "",
         // Adding fields to maintain consistency with schema
     };
 
@@ -424,22 +423,7 @@ export default function CategoryForm(props) {
                                     />
                                 </Grid>
 
-                                {/* IP No */}
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        name="IpNo"
-                                        label="IP No"
-                                        color="info"
-                                        size="medium"
-                                        placeholder="IP No"
-                                        value={values.IpNo}
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        helperText={touched.IpNo && errors.IpNo}
-                                        error={Boolean(touched.IpNo && errors.IpNo)}
-                                    />
-                                </Grid>
+                              
 
                                 {/* Department Name */}
                                 <Grid item xs={12} sm={6}>
@@ -559,6 +543,26 @@ export default function CategoryForm(props) {
                                         error={Boolean(touched.RelationAddress && errors.RelationAddress)}
                                     />
                                 </Grid>
+
+                                <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      name="AdvanceAmount"
+                      label="Advance Amount"
+                      color="info"
+                      size="medium"
+                      placeholder="Advance Amount"
+                      value={values.AdvanceAmount}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      helperText={
+                        touched.AdvanceAmount && errors.AdvanceAmount
+                      }
+                      error={Boolean(
+                        touched.AdvanceAmount && errors.AdvanceAmount
+                      )}
+                    />
+                  </Grid>
 
                                 {/* Submit Button */}
                                 <Grid item xs={12}>

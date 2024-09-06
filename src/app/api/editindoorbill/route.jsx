@@ -9,7 +9,7 @@ export async function PUT(request) {
         await connectToDatabase();
 
         // Parse the incoming JSON request
-        const { _id, MrNo,BillNo, PatientName, DoctorName, PatientType, IpdNo, Age, Sex, BillDate, DoaTime, DodTime, WardName, services, TotalBillAmount, ConsAmount, NetPayAmount, PaidAmount, DueAmount, status, AdvanceAmount, AdvanceBalAmount, AdvanceRefundAmount, PaymentDetails } = await request.json();
+        const { _id, MrNo,BillNo, PatientName, DoctorName, PatientType, Age, Sex, BillDate, DoaTime, DodTime, WardName, services, TotalBillAmount, ConsAmount, NetPayAmount, PaidAmount, DueAmount, status, AdvanceAmount, AdvanceBalAmount, AdvanceRefundAmount, PaymentDetails } = await request.json();
 
         // Validate the presence of the IPD record ID
         if (!_id) {
@@ -38,7 +38,6 @@ export async function PUT(request) {
         if (PatientName) ipdRecord.PatientName = PatientName;
         if (DoctorName) ipdRecord.DoctorName = DoctorName;
         if (PatientType) ipdRecord.PatientType = PatientType;
-        if (IpdNo) ipdRecord.IpdNo = IpdNo;
         if (Age) ipdRecord.Age = Age;
         if (Sex) ipdRecord.Sex = Sex;
         if (BillDate) ipdRecord.BillDate = BillDate;

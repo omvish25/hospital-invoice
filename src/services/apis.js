@@ -1,6 +1,6 @@
 
-export const BASE_URL = "https://www.indiaflorista.in/api";
-// export const BASE_URL = "http://localhost:3000/api";
+// export const BASE_URL = "https://www.indiaflorista.in/api";
+export const BASE_URL = "http://localhost:3000/api";
 
 export const IndoorBillsEndpoints = {
   CREATEINDOORBILL_API: BASE_URL + "/createindoorbill",
@@ -9,6 +9,7 @@ export const IndoorBillsEndpoints = {
   EDITINDOORBILL_API: BASE_URL + "/editindoorbill",
   DELETEINDOORBILL_API: BASE_URL + "/deleteindoorbill",
   GETINDOORBILLBYID_API: BASE_URL + "/getindoorbillbyid",
+  GATALLCASEPAPER_API: BASE_URL + "/getallcasepaperid",
 }
 export const IpdCaseEndpoints = {
   CREATEIPDCASE_API: BASE_URL + "/createindoorcasepaper",

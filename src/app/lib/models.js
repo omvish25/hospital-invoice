@@ -159,7 +159,6 @@ const IpdCasePaperSchema = new mongoose.Schema(
         },
         MlcNo: {
             type: String,
-            required: true,
         },
         AdmissionTime: {
             type: String,
@@ -193,6 +192,9 @@ const IpdCasePaperSchema = new mongoose.Schema(
         RelationAddress: {
             type: String,
             required: true,
+        },
+        AdvanceAmount: {
+            type: String,
         },
 
     },

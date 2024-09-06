@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -13,13 +13,17 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PageWrapper from "../../page-wrapper";
 import { Addinvoiceipdhandler } from "services/operations/ipdinvoices";
+import { IndoorBillsEndpoints } from "services/apis";
+const { GATALLCASEPAPER_API } = IndoorBillsEndpoints;
+import { apiConnector } from "services/apiConnector";
+import Autocomplete from "@mui/material/Autocomplete";
 
 // FORM FIELDS VALIDATION SCHEMA
 const VALIDATION_SCHEMA = yup.object().shape({
   PatientName: yup.string().required("Patient Name is required!"),
   DoctorName: yup.string().required("Doctor Name is required!"),
   PatientType: yup.string().required("Patient Type is required!"),
-  IpdNo: yup.string().required("IPD No is required!"),
+  IpdNo: yup.string(),
   Age: yup.string().required("Age is required!"),
   Sex: yup.string().required("Sex is required!"),
   BillDate: yup.date().required("Bill Date is required!"),
@@ -56,7 +60,6 @@ export default function IpdForm() {
     PatientName: "",
     DoctorName: "",
     PatientType: "",
-    IpdNo: "",
     Age: "",
     Sex: "",
     BillDate: null,
@@ -76,6 +79,21 @@ export default function IpdForm() {
     PaymentDetails: [{ PaymentType: "", PaymentAmount: "" }],
   };
 
+
+  const [casePaper, setCasePaper] = useState([])
+
+  useEffect(() => {
+    fetchindoorcasepaper()
+  }, [])
+
+  const fetchindoorcasepaper = async () => {
+    const response = await apiConnector(
+      "GET",
+      `${GATALLCASEPAPER_API}`
+    )
+    setCasePaper(response.data.data)
+    console.log(response.data.data)
+  }
   const calculateTotalBillAmount = (services) => {
     const total = services.reduce((sum, service) => sum + parseFloat(service.serviceTotal || 0), 0);
     return total.toFixed(2);
@@ -129,6 +147,34 @@ export default function IpdForm() {
             return (
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
+
+                <Grid item xs={12}>
+                    <Autocomplete
+                      options={casePaper}
+                      getOptionLabel={(option) => `${option.PatientName} (${option.MrNo})`}
+                      onChange={(event, value) => {
+                        setFieldValue("MrNo", value?.MrNo || "");
+                        setFieldValue("PatientName", value?.PatientName || "");
+                        setFieldValue("DoctorName", value?.DoctorName || "");
+                        setFieldValue("PatientType", value?.PatientCategory || "");
+                        setFieldValue("Age", value?.Age || "");
+                        setFieldValue("Sex", value?.Sex || "");
+                        setFieldValue("AdvanceAmount", value?.AdvanceAmount || "");
+                        // You can also set other related fields like Age, Sex, etc., here if required
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Select Patient"
+                          name="MrNo"
+                          color="info"
+                          placeholder="Search by Patient Name or MR No"
+                          error={Boolean(touched.MrNo && errors.MrNo)}
+                          helperText={touched.MrNo && errors.MrNo}
+                        />
+                      )}
+                    />
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
@@ -172,21 +218,6 @@ export default function IpdForm() {
                       onChange={handleChange}
                       helperText={touched.PatientType && errors.PatientType}
                       error={Boolean(touched.PatientType && errors.PatientType)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      name="IpdNo"
-                      label="IPD No"
-                      color="info"
-                      size="medium"
-                      placeholder="IPD No"
-                      value={values.IpdNo}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      helperText={touched.IpdNo && errors.IpdNo}
-                      error={Boolean(touched.IpdNo && errors.IpdNo)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -401,7 +432,7 @@ export default function IpdForm() {
                       color="info"
                       size="medium"
                       placeholder="Total Bill Amount"
-                      value={values.TotalBillAmount}
+                      value={values.TotalBillAmount - values.AdvanceAmount || 0}
                       onBlur={handleBlur}
                       onChange={handleChange}
                       helperText={touched.TotalBillAmount && errors.TotalBillAmount}
