@@ -20,7 +20,7 @@ export async function POST(request) {
         
         // Auto-generate BillNo and MrNo
         const BillNo = await generateAutoIncrementedValue('BillNo', 'BILL-');
-        const IpdNo = await generateAutoIncrementedValue('IpdNo', 'IPD-');
+       
 
         const { 
             PatientName, 
@@ -43,7 +43,8 @@ export async function POST(request) {
             AdvanceAmount, 
             AdvanceBalAmount, 
             AdvanceRefundAmount, 
-            PaymentDetails 
+            PaymentDetails,
+            IpdNo
         } = body;
 
         const newIpd = new Ipd({

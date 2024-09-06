@@ -124,7 +124,9 @@ export default function CategoriesPageView({
     BedName: item.BedName,
     RelationName: item.RelationName,
     RelationPhoneNoo: item.RelationPhoneNoo,
-    RelationAddress: item.RelationAddress,
+    RelationAddress: item.RelationAddress,  
+    AdvanceAmount: item.AdvanceAmount,
+    CreatedAt: item.createdAt
   }));
   const {
     order,

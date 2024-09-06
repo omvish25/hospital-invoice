@@ -12,6 +12,7 @@ import { Paragraph, Small } from "components/Typography";
 import { currency } from "lib";
 import { StyledTableRow, StyledTableCell, StyledIconButton } from "../styles";
 import { toWords } from 'number-to-words';
+import moment from 'moment-timezone';
 
 
 
@@ -43,6 +44,7 @@ export default function ProductRow({ product }) {
         AdvanceRefundAmount,
         PaymentDetails
     } = product || {};
+    console.log(DoaTime)
     const router = useRouter();
     const [productPublish, setProductPublish] = useState(published);
     const printDateto = new Date().toLocaleDateString('en-GB')
@@ -57,12 +59,17 @@ export default function ProductRow({ product }) {
         const ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
-        const formattedDate = `${day}/${month}/${year} ${hours}:${minutes} ${ampm}`;
+        const formattedDate = `${day}/${month}/${year}`;
         return formattedDate;
     };
+    const convertUTCToIST = (utcDateString) => {
+        return moment(utcDateString).tz('Asia/Kolkata').format('DD/MM/YYYY hh:mm A');
+    };
     const formattedBillDate = formatDate(BillDate);
-    const formatedDoaTime = formatDate(DoaTime)
-    const formatedDodTime = formatDate(DodTime)
+    const formatedDoaTime = convertUTCToIST(DoaTime)
+console.log(formatedDoaTime)
+    const formatedDodTime = convertUTCToIST(DodTime)
+    console.log(formatedDodTime)
     const handleDownloadPdf = () => {
         const doc = new jsPDF();
         const scale = 2;

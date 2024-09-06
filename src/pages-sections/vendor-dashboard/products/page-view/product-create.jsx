@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import { Formik, FieldArray } from "formik";
 import * as yup from "yup";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PageWrapper from "../../page-wrapper";
@@ -60,6 +61,7 @@ export default function IpdForm() {
     PatientName: "",
     DoctorName: "",
     PatientType: "",
+    IpdNo: "",
     Age: "",
     Sex: "",
     BillDate: null,
@@ -94,6 +96,8 @@ export default function IpdForm() {
     setCasePaper(response.data.data)
     console.log(response.data.data)
   }
+
+
   const calculateTotalBillAmount = (services) => {
     const total = services.reduce((sum, service) => sum + parseFloat(service.serviceTotal || 0), 0);
     return total.toFixed(2);
@@ -160,6 +164,7 @@ export default function IpdForm() {
                         setFieldValue("Age", value?.Age || "");
                         setFieldValue("Sex", value?.Sex || "");
                         setFieldValue("AdvanceAmount", value?.AdvanceAmount || "");
+                        setFieldValue("IpdNo", value?.IpNo || "");
                         // You can also set other related fields like Age, Sex, etc., here if required
                       }}
                       renderInput={(params) => (
@@ -269,7 +274,7 @@ export default function IpdForm() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <DatePicker
+                    <DateTimePicker
                       sx={{ width: "100%" }}
                       label="DOA Time"
                       value={values.DoaTime}
@@ -287,11 +292,13 @@ export default function IpdForm() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <DatePicker
+                    <DateTimePicker
                       label="DOD Time"
                       sx={{ width: "100%", height: "150%" }}
                       value={values.DodTime}
-                      onChange={(value) => setFieldValue("DodTime", value)}
+                      onChange={(value) => 
+                        setFieldValue("DodTime", value)
+                      }
                       renderInput={(params) => (
                         <TextField
                           {...params}
