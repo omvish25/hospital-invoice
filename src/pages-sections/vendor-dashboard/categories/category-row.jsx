@@ -8,7 +8,9 @@ import html2canvas from "html2canvas";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import RemoveRedEye from "@mui/icons-material/RemoveRedEye";
-
+import { apiConnector } from "services/apiConnector";
+import { IpdCaseEndpoints } from "services/apis";
+const { DELETEIPDCASE_API, GETSEARCHIPDCASE_API } = IpdCaseEndpoints;
 // GLOBAL CUSTOM COMPONENT
 
 import BazaarSwitch from "components/BazaarSwitch";
@@ -20,7 +22,6 @@ import { StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } fr
 
 // ========================================================================
 export default function CategoryRow({ caseData }) {
-    console.log("caseData", caseData);
     const {
         MrNo,
         PatientName,
@@ -251,6 +252,28 @@ export default function CategoryRow({ caseData }) {
         });
     };
     const [casePublish, setCasePublish] = useState(published);
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Do you want to delete this?");
+
+        if (confirmDelete) {
+            try {
+                const response = await apiConnector(
+                    "DELETE",
+                    `${DELETEIPDCASE_API}?id=${id}`
+                );
+
+                if (response.status === 200) { // Assuming 200 means successful deletion
+                    alert("Record deleted successfully!");
+                    window.location.reload(); // Refresh the page
+                } else {
+                    alert("Failed to delete the record.");
+                }
+            } catch (error) {
+                console.error("Error deleting record:", error);
+                alert("An error occurred while deleting the record.");
+            }
+        }
+    };
 
     return (
         <StyledTableRow tabIndex={-1} role="checkbox">
@@ -273,7 +296,7 @@ export default function CategoryRow({ caseData }) {
                 </StyledIconButton>
 
                 <StyledIconButton>
-                    <Delete />
+                    <Delete onClick={handleDelete} />
                 </StyledIconButton>
             </StyledTableCell>
         </StyledTableRow>

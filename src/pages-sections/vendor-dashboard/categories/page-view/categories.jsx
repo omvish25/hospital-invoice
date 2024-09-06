@@ -20,6 +20,7 @@ import Link from "next/link";
 import Scrollbar from "components/scrollbar";
 import { TableHeader, TablePagination } from "components/data-table";
 // GLOBAL CUSTOM HOOK
+import axios from "axios";
 
 import useMuiTable from "hooks/useMuiTable";
 //  LOCAL CUSTOM COMPONENT
@@ -38,7 +39,7 @@ const tableHeading = [
   { id: "CompanyName", label: "Company Name", align: "left" },
   { id: "AdmissionDate", label: "Admission Date", align: "left" },
   { id: "action", label: "Action", align: "center" }
-]; 
+];
 // =============================================================================
 
 
@@ -81,7 +82,7 @@ export default function CategoriesPageView({
   const handleSearch = async () => {
     const response = await apiConnector(
       "GET",
-      `${GETSEARCHIPDCASE_API}?search=${searchQuery}`
+      `${GETSEARCHIPDCASE_API}?data=${searchQuery}`
     );
     setAllInvoiceList(response?.data?.results);
   };
