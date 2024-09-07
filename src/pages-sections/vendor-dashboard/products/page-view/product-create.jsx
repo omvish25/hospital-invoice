@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
+import axios from 'axios';
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -89,13 +90,24 @@ export default function IpdForm() {
   }, [])
 
   const fetchindoorcasepaper = async () => {
-    const response = await apiConnector(
-      "GET",
-      `${GATALLCASEPAPER_API}`
-    )
-    setCasePaper(response.data.data)
-    console.log(response.data.data)
-  }
+    try {
+      // Use axios to fetch the data
+      const response = await axios.get(GATALLCASEPAPER_API, {
+        headers: {
+          'Cache-Control': 'no-cache', // Force fresh data, bypassing any cache
+        },
+      });
+
+      if (response?.data?.data) {
+        setCasePaper(response.data.data); 
+        console.log(response.data.data);
+      } else {
+        console.error("No data found in the response");
+      }
+    } catch (error) {
+      console.error("Error fetching case papers:", error.message || error);
+    }
+  };
 
 
   const calculateTotalBillAmount = (services) => {
