@@ -12,6 +12,8 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 import { apiConnector } from "services/apiConnector";
 import { IpdCaseEndpoints } from "services/apis";
 const { DELETEIPDCASE_API, GETSEARCHIPDCASE_API } = IpdCaseEndpoints;
+import moment from 'moment-timezone';
+
 // GLOBAL CUSTOM COMPONENT
 
 import BazaarSwitch from "components/BazaarSwitch";
@@ -40,6 +42,8 @@ console.log(caseData?.AdvanceAmounts)
 const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
     return total + parseFloat(advance.amount || 0);
 }, 0);
+
+
 
     const handleAdvanceDownloadPdf = () => {
         const doc = new jsPDF();
@@ -293,7 +297,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
         const ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
-        const formattedDate = `${day}/${month}/${year} ${hours}:${minutes} ${ampm}`;
+        const formattedDate = `${day}/${month}/${year}`;
         return formattedDate;
     };
 
@@ -325,6 +329,14 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
     
         return `${day}:${month}:${year}`;
     }
+
+    const convertUTCToIST = (utcDateString) => {
+        return moment(utcDateString).tz('Asia/Kolkata').format('DD/MM/YYYY hh:mm A');
+    };
+
+    const convertUTCToISTDate = (utcDateString) => {
+        return moment(utcDateString).tz('Asia/Kolkata').format('DD/MM/YYYY');
+    };
 
     const handleDownloadPdf = () => {
         const doc = new jsPDF();
@@ -399,13 +411,13 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
             <td style="padding: 5px;"><strong>Phone No</strong></td>
             <td style="padding: 5px;">: ${caseData.PhoneNumber}</td>
             <td style="padding: 5px;"><strong>Admission Time</strong></td>
-            <td style="padding: 5px;"> : ${new Date(caseData.AdmissionTime).toLocaleDateString('en-CA')}</td>
+            <td style="padding: 5px;"> : ${convertUTCToIST(caseData.AdmissionTime)}</td>
         
            
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Admission Date</strong></td>
-            <td style="padding: 5px;"> :${new Date(AdmissionDate).toLocaleDateString('en-CA')}</td>
+            <td style="padding: 5px;"> :${convertUTCToISTDate(AdmissionDate)}</td>
             <td style="padding: 5px;"><strong>Department Name</strong> </td>
             <td style="padding: 5px;"> : ${caseData.DepartmentName}</td>
            
