@@ -111,11 +111,11 @@ const IpdCasePaperSchema = new mongoose.Schema(
         },
         Age: {
             type: String,
-            required: true,
+           
         },
         Sex: {
             type: String,
-            required: true,
+          
         },
         MaritialStatus: {
             type: String,
@@ -155,43 +155,43 @@ const IpdCasePaperSchema = new mongoose.Schema(
         },
         isReimbursement: {
             type: String,
-            required: true,
+         
         },
         MlcNo: {
             type: String,
         },
         AdmissionTime: {
             type: String,
-            required: true,
+           
         },
         DepartmentName: {
             type: String,
-            required: true,
+         
         },
 
         CompanyName: {
             type: String,
-            required: true,
+          
         },
         TariffName: {
             type: String,
-            required: true,
+            
         },
         BedName: {
             type: String,
-            required: true,
+        
         },
         RelationName: {
             type: String,
-            required: true,
+           
         },
         RelationPhoneNoo: {
             type: String,
-            required: true,
+         
         },
         RelationAddress: {
             type: String,
-            required: true,
+           
         },
         AdvanceAmount: {
             type: String,
