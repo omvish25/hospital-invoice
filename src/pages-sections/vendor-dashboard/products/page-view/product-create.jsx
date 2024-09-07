@@ -94,7 +94,7 @@ export default function IpdForm() {
     console.log("inside api")
     try {
       // Use axios to fetch the data
-      const response = await axios.get(GATALLCASEPAPER_API, {
+      const response = await axios.put(GATALLCASEPAPER_API, {
         headers: {
           'Cache-Control': 'no-cache', // Force fresh data, bypassing any cache
         },

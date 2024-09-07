@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '../../lib/utils';
 import { IpdCase } from '../../lib/models';
 
-export async function GET(request) {
+export async function PUT(request) {
     try {
         await connectToDatabase();
         const ipdCasePapers = await IpdCase.find();
