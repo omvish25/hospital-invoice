@@ -35,12 +35,24 @@ export default function CategoryRow({ caseData }) {
     } = caseData || {};
 
     const router = useRouter();
+console.log(caseData?.AdvanceAmounts)
 
+const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
+    return total + parseFloat(advance.amount || 0);
+}, 0);
 
     const handleAdvanceDownloadPdf = () => {
         const doc = new jsPDF();
         const scale = 2;
-
+        const advanceRows = caseData?.AdvanceAmounts.map((advance) => {
+            return `
+            <tr style="width: 100%;">
+                <th style="width: 50%; padding-left: 10px; text-align: start;">Advance Amt :</th>
+                <td style="width: 50%; text-align: end; padding-right: 10px;">
+                    ${advance.amount} ( ${convertToDDMMYYYY(advance.date)} ) - ${advance.method}
+                </td>
+            </tr>`;
+        }).join('');
 
         const htmlContent = `
      <!DOCTYPE html>
@@ -142,7 +154,7 @@ export default function CategoryRow({ caseData }) {
             <p ><strong>Print Date :</strong>  ${convertToDDMMYYYY(caseData?.CreatedAt)}</p>
         </div>
         <div style=" display: flex; border: 1px solid black; align-items: center; justify-content: center; border-radius: 10px; height: 40px;">
-            <p><strong>IP FINAL BILL</strong></p>
+            <p><strong>Advance Recipient:</strong></p>
         </div>
 
         <div class="bill-info">
@@ -171,15 +183,13 @@ export default function CategoryRow({ caseData }) {
             
                     <th></th>
                     <td></td>
-                    <th>Marrital Status:</th>
-                    <td>${caseData?.MaritialStatus}</td>
+                    
                 </tr>
                 <tr>
                     <th>Doctor Name:</th>
                     <td>${caseData?.DoctorName}</td>
                    
-                    <th></th>
-                    <td></td>
+                  
                     <th>Bed Name:</th>
                     <td>${caseData?.BedName}</td>
                 </tr>
@@ -199,18 +209,13 @@ export default function CategoryRow({ caseData }) {
                 <div style="display: flex; justify-content: center; width: 100%;">
                 <table style="width: 100%;">
                     <tbody>
-                        <tr style="width: 100%;">
-                            <th style="width: 50%; padding-left: 10px;  text-align: start; ">Advance Amt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</th>
-                            <td style="width: 40%; text-align: end; padding-right: 10px; ">${caseData?.AdvanceAmount}</td>
-                        </tr>
-                        <tr style="width: 100%;">
-                            <th style="width: 50%; padding-left: 10px;  text-align: start; ">Advance Bal Amt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</th>
-                            <td style="width: 40%; text-align: end; padding-right: 10px; ">0</td>
-                        </tr>
-                        <tr style="width: 100%;">
-                            <th style="width: 50%; padding-left: 10px;  text-align: start; ">Advance Refund Amt&nbsp;&nbsp; :</th>
-                            <td style="width: 40%; text-align: end; padding-right: 10px; ">0</td>
-                        </tr>
+                   ${advanceRows}
+              <tr style="width: 100%;">
+                <th style="width: 50%; padding-left: 10px; text-align: start;">Total Amount Paid :</th>
+                <td style="width: 50%; text-align: end; padding-right: 10px;">
+                   ${totalAdvancePaid}
+                </td>
+            </tr>
                     </tbody>
                 </table>
             </div>

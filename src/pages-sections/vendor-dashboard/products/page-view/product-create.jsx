@@ -177,9 +177,12 @@ export default function IpdForm() {
                         setFieldValue("PatientType", value?.PatientCategory || "");
                         setFieldValue("Age", value?.Age || "");
                         setFieldValue("Sex", value?.Sex || "");
-                        setFieldValue("AdvanceAmount", value?.AdvanceAmount || "");
                         setFieldValue("IpdNo", value?.IpNo || "");
-                        // You can also set other related fields like Age, Sex, etc., here if required
+                        const totalAdvanceAmount = value?.AdvanceAmounts?.reduce((total, advance) => {
+                          return total + parseFloat(advance.amount || 0);
+                      }, 0) || 0;
+                  
+                      setFieldValue("AdvanceAmount", totalAdvanceAmount.toFixed(2)); 
                       }}
                       renderInput={(params) => (
                         <TextField

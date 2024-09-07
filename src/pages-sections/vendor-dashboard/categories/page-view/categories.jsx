@@ -125,7 +125,7 @@ export default function CategoriesPageView({
     RelationName: item.RelationName,
     RelationPhoneNoo: item.RelationPhoneNoo,
     RelationAddress: item.RelationAddress,  
-    AdvanceAmount: item.AdvanceAmount,
+    AdvanceAmounts: item.AdvanceAmounts,
     CreatedAt: item.createdAt
   }));
   const {

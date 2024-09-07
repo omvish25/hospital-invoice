@@ -33,17 +33,19 @@ export async function POST(request) {
             RelationName,
             RelationPhoneNoo,
             RelationAddress,
-            AdvanceAmount
+            AdvanceAmounts
         } = body;
+
+        console.log(AdvanceAmounts)
 
         // Generate the MrNo
         const lastIpdCase = await IpdCase.findOne().sort({ MrNo: -1 });
-        const newMrNoNumber = lastIpdCase ? parseInt(lastIpdCase.MrNo.split('-')[1]) + 1 : 1;
-        const newMrNo = `MR-${newMrNoNumber}`;
+        const newMrNoNumber = lastIpdCase ? parseInt(lastIpdCase.MrNo.split('-')[1]) + 1 : 250;
+        const newMrNo = `OM-${newMrNoNumber}`;
 
         // Generate the IpNo
         const lastIpNoCase = await IpdCase.findOne().sort({ IpNo: -1 });
-        const newIpNoNumber = lastIpNoCase ? parseInt(lastIpNoCase.IpNo.split('-')[1]) + 1 : 1;
+        const newIpNoNumber = lastIpNoCase ? parseInt(lastIpNoCase.IpNo.split('-')[1]) + 1 : 250;
         const newIpNo = `IP-${newIpNoNumber}`;
 
         const newIpdCasePaper = new IpdCase({
@@ -73,7 +75,7 @@ export async function POST(request) {
             RelationName,
             RelationPhoneNoo,
             RelationAddress,
-            AdvanceAmount
+            AdvanceAmounts
         });
 
         // Save the document to the database

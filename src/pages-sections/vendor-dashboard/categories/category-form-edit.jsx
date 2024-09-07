@@ -19,7 +19,7 @@ import axios from "axios";
 
 
 const VALIDATION_SCHEMA = yup.object().shape({
-  
+
     PatientName: yup.string(),
     Age: yup.string(),
     Sex: yup.string(),
@@ -50,21 +50,53 @@ const VALIDATION_SCHEMA = yup.object().shape({
 // ================================================================
 export default function CategoryForm(props) {
 
-    const [currentCategoryData, setCurrentCategoryData] = useState();
-    const [id, setId] = useState();
+    const [initialValues, setInitialValues] = useState(null);
+    const [id, setId] = useState(null);
     const pathname = usePathname();
     const slug = pathname.split("/").pop();
+
     async function fetchData() {
         try {
-            // Ensure that slug is properly formatted in the URL
-            const response = await axios.get(
-                `${BASE_URL}/finddatabyidipocase?slug=${slug}`
-            );
-            setCurrentCategoryData(response?.data);
-            setId(response?.data?._id);
+            const response = await axios.get(`${BASE_URL}/finddatabyidipocase?slug=${slug}`);
+            const data = response?.data;
+
+            setId(data?._id);
+
+            setInitialValues({
+                PatientName: data?.PatientName || "",
+                Age: data?.Age || "",
+                Sex: data?.Sex || "",
+                MaritialStatus: data?.MaritialStatus || "",
+                Address: data?.Address || "",
+                MobileNo: data?.MobileNo || "",
+                PhoneNumber: data?.PhoneNumber || "",
+                AdmissionDate: data?.AdmissionDate || null,
+                AdmissionTime: data?.AdmissionTime || null,
+                DoctorName: data?.DoctorName || "",
+                SecondDoctorName: data?.SecondDoctorName || "",
+                ThirdDoctorName: data?.ThirdDoctorName || "",
+                RefDoctorName: data?.RefDoctorName || "",
+                RelativeName: data?.RelativeName || "",
+                PatientCategory: data?.PatientCategory || "",
+                isReimbursement: data?.isReimbursement || "",
+                MlcNo: data?.MlcNo || "",
+                DepartmentName: data?.DepartmentName || "",
+                CompanyName: data?.CompanyName || "",
+                TariffName: data?.TariffName || "",
+                BedName: data?.BedName || "",
+                RelationName: data?.RelationName || "",
+                RelationPhoneNoo: data?.RelationPhoneNoo || "",
+                RelationAddress: data?.RelationAddress || "",
+                AdvanceAmounts: data?.AdvanceAmounts || [
+                    {
+                        amount: "",
+                        date: null,
+                        method: "",
+                    },
+                ],
+            });
         } catch (error) {
             console.error("Failed to fetch data", error);
-            // Handle error if necessary
         }
     }
 
@@ -72,54 +104,22 @@ export default function CategoryForm(props) {
         fetchData();
     }, []);
 
-    const INITIAL_VALUES = {
-       
-        PatientName: currentCategoryData?.PatientName || "",
-        Age: currentCategoryData?.Age || "",
-        Sex: currentCategoryData?.Sex || "",
-        MaritialStatus: currentCategoryData?.MaritialStatus || "", // Note the spelling here matches the schema
-        Address: currentCategoryData?.Address || "",
-        MobileNo: currentCategoryData?.MobileNo || "",
-        PhoneNumber: currentCategoryData?.PhoneNumber || "",
-        AdmissionDate: currentCategoryData?.AdmissionDate || "",
-        DoctorName: currentCategoryData?.DoctorName || "",
-        SecondDoctorName: currentCategoryData?.SecondDoctorName || "",
-        ThirdDoctorName: currentCategoryData?.ThirdDoctorName || "",
-        RefDoctorName: currentCategoryData?.RefDoctorName || "",
-        RelativeName: currentCategoryData?.RelativeName || "",
-        PatientCategory: currentCategoryData?.PatientCategory || "",
-        isReimbursement: currentCategoryData?.isReimbursement || "",
-        MlcNo: currentCategoryData?.MlcNo || "",
-        AdmissionTime: currentCategoryData?.AdmissionTime || "",
-        DepartmentName: currentCategoryData?.DepartmentName || "",
-        CompanyName: currentCategoryData?.CompanyName || "",
-        TariffName: currentCategoryData?.TariffName || "",
-        BedName: currentCategoryData?.BedName || "",
-        RelationName: currentCategoryData?.RelationName || "",
-        RelationPhoneNoo: currentCategoryData?.RelationPhoneNoo || "",
-        RelationAddress: currentCategoryData?.RelationAddress || "",
-        AdvanceAmount: currentCategoryData?.AdvanceAmount || "",
-        // Adding fields to maintain consistency with schema
-    };
-
     const handleFormSubmit = async (values) => {
-        const data = {
-            ...values,
-            id: id, // Ensure `id` is correctly defined
-        };
+        const data = { ...values, id: id };
 
         await Editadmin(data);
-        // Implement form submission logic here (e.g., API call)
     };
-    if (!currentCategoryData) {
+
+    if (!initialValues) {
         return <p>Loading...</p>;
     }
+
     return (
         <PageWrapper title="Edit Case Paper">
             <Card className="p-3">
                 <Formik
                     onSubmit={handleFormSubmit}
-                    initialValues={INITIAL_VALUES}
+                    initialValues={initialValues}
                     validationSchema={VALIDATION_SCHEMA}
                 >
                     {({
@@ -133,7 +133,7 @@ export default function CategoryForm(props) {
                     }) => (
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={3}>
-                                
+
                                 {/* Patient Name */}
                                 <Grid item xs={12} sm={6}>
                                     <TextField
@@ -423,7 +423,7 @@ export default function CategoryForm(props) {
                                     />
                                 </Grid>
 
-                              
+
 
                                 {/* Department Name */}
                                 <Grid item xs={12} sm={6}>
@@ -545,24 +545,87 @@ export default function CategoryForm(props) {
                                 </Grid>
 
                                 <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      name="AdvanceAmount"
-                      label="Advance Amount"
-                      color="info"
-                      size="medium"
-                      placeholder="Advance Amount"
-                      value={values.AdvanceAmount}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      helperText={
-                        touched.AdvanceAmount && errors.AdvanceAmount
-                      }
-                      error={Boolean(
-                        touched.AdvanceAmount && errors.AdvanceAmount
-                      )}
-                    />
-                  </Grid>
+                                    <FieldArray name="AdvanceAmounts">
+                                        {({ push, remove }) => (
+                                            <div>
+                                                {values.AdvanceAmounts?.map((advance, index) => (
+                                                    <Grid container spacing={3} key={index} alignItems="center">
+                                                        <Grid item xs={12} sm={3}>
+                                                            <TextField
+                                                                fullWidth
+                                                                name={`AdvanceAmounts.${index}.amount`}
+                                                                label="Advance Amount"
+                                                                value={advance.amount}
+                                                                onBlur={handleBlur}
+                                                                onChange={handleChange}
+                                                                helperText={
+                                                                    touched.AdvanceAmounts?.[index]?.amount && errors.AdvanceAmounts?.[index]?.amount
+                                                                }
+                                                                error={Boolean(
+                                                                    touched.AdvanceAmounts?.[index]?.amount && errors.AdvanceAmounts?.[index]?.amount
+                                                                )}
+                                                            />
+                                                        </Grid>
+
+                                                        <Grid item xs={12} sm={3}>
+                                                            <DatePicker
+                                                                label="Date"
+                                                                value={advance.date || null}
+                                                                onChange={(newDate) => setFieldValue(`AdvanceAmounts.${index}.date`, newDate)}
+                                                                renderInput={(params) => (
+                                                                    <TextField
+                                                                        {...params}
+                                                                        fullWidth
+                                                                        helperText={
+                                                                            touched.AdvanceAmounts?.[index]?.date && errors.AdvanceAmounts?.[index]?.date
+                                                                        }
+                                                                        error={Boolean(
+                                                                            touched.AdvanceAmounts?.[index]?.date && errors.AdvanceAmounts?.[index]?.date
+                                                                        )}
+                                                                    />
+                                                                )}
+                                                            />
+                                                        </Grid>
+
+                                                        <Grid item xs={12} sm={3}>
+                                                            <TextField
+                                                                fullWidth
+                                                                name={`AdvanceAmounts.${index}.method`}
+                                                                label="Payment Method"
+                                                                value={advance.method}
+                                                                onBlur={handleBlur}
+                                                                onChange={handleChange}
+                                                                helperText={
+                                                                    touched.AdvanceAmounts?.[index]?.method && errors.AdvanceAmounts?.[index]?.method
+                                                                }
+                                                                error={Boolean(
+                                                                    touched.AdvanceAmounts?.[index]?.method && errors.AdvanceAmounts?.[index]?.method
+                                                                )}
+                                                            />
+                                                        </Grid>
+
+                                                        <Grid item xs={12} sm={1}>
+                                                            {values.AdvanceAmounts.length > 1 && (
+                                                                <IconButton onClick={() => remove(index)} color="error">
+                                                                    <DeleteIcon />
+                                                                </IconButton>
+                                                            )}
+                                                        </Grid>
+                                                    </Grid>
+                                                ))}
+                                                <Button
+                                                    sx={{ mt: 2 }}
+                                                    variant="contained"
+                                                    color="info"
+                                                    onClick={() => push({ amount: "", date: null, method: "" })}
+                                                >
+                                                    Add Advance Payment
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </FieldArray>
+                                </Grid>
+
 
                                 {/* Submit Button */}
                                 <Grid item xs={12}>

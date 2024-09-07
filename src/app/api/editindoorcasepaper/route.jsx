@@ -46,7 +46,7 @@ export async function PUT(request) {
         if (body.RelationName) updateFields.RelationName = body.RelationName;
         if (body.RelationPhoneNoo) updateFields.RelationPhoneNoo = body.RelationPhoneNoo;
         if (body.RelationAddress) updateFields.RelationAddress = body.RelationAddress;
-        if (body.AdvanceAmount) updateFields.AdvanceAmount = body.AdvanceAmount;
+        if (body.AdvanceAmounts) updateFields.AdvanceAmounts = body.AdvanceAmounts;
 
 
         

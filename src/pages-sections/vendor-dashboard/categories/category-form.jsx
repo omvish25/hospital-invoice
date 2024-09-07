@@ -68,11 +68,17 @@ export default function CategoryForm(props) {
     RelationName: "",
     RelationPhoneNoo: "",
     RelationAddress: "",
-    AdvanceAmount: "",
+    AdvanceAmounts: [
+      {
+        amount: "",
+        date: null,
+        method: "",
+      },
+    ],
   };
 
   const handleFormSubmit = async (values) => {
-    // console.log(values);
+    console.log(values);
     await Addinvoiceipdhandler(values);
     // Implement form submission logic here (e.g., API call)
   };
@@ -510,24 +516,82 @@ export default function CategoryForm(props) {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      name="AdvanceAmount"
-                      label="Advance Amount"
-                      color="info"
-                      size="medium"
-                      placeholder="Advance Amount"
-                      value={values.AdvanceAmount}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      helperText={
-                        touched.AdvanceAmount && errors.AdvanceAmount
-                      }
-                      error={Boolean(
-                        touched.AdvanceAmount && errors.AdvanceAmount
-                      )}
-                    />
-                  </Grid>
+                  <FieldArray name="AdvanceAmounts">
+                    {({ push, remove }) => (
+                      <div>
+                        {values.AdvanceAmounts.map((advance, index) => (
+                          <Grid container spacing={3} key={index} alignItems="center">
+                            <Grid item xs={12} sm={3}>
+                              <TextField
+                                fullWidth
+                                name={`AdvanceAmounts.${index}.amount`}
+                                label="Advance Amount"
+                                color="info"
+                                size="medium"
+                                placeholder="Amount"
+                                value={advance.amount}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                helperText={touched.AdvanceAmounts?.[index]?.amount && errors.AdvanceAmounts?.[index]?.amount}
+                                error={Boolean(touched.AdvanceAmounts?.[index]?.amount && errors.AdvanceAmounts?.[index]?.amount)}
+                              />
+                            </Grid>
+
+                            <Grid item xs={12} sm={3}>
+                              <DatePicker
+                                label="Date"
+                                value={advance.date || null}
+                                onChange={(newDate) => setFieldValue(`AdvanceAmounts.${index}.date`, newDate)}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    fullWidth
+                                    helperText={touched.AdvanceAmounts?.[index]?.date && errors.AdvanceAmounts?.[index]?.date}
+                                    error={Boolean(touched.AdvanceAmounts?.[index]?.date && errors.AdvanceAmounts?.[index]?.date)}
+                                  />
+                                )}
+                              />
+                            </Grid>
+
+                            <Grid item xs={12} sm={3}>
+                              <TextField
+                                fullWidth
+                                name={`AdvanceAmounts.${index}.method`}
+                                label="Payment Method"
+                                color="info"
+                                size="medium"
+                                placeholder="Payment Method"
+                                value={advance.method}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                helperText={touched.AdvanceAmounts?.[index]?.method && errors.AdvanceAmounts?.[index]?.method}
+                                error={Boolean(touched.AdvanceAmounts?.[index]?.method && errors.AdvanceAmounts?.[index]?.method)}
+                              />
+                            </Grid>
+
+                            <Grid item xs={12} sm={1}>
+                              {values.AdvanceAmounts.length > 1 && (
+                                <IconButton onClick={() => remove(index)} color="error">
+                                  <DeleteIcon />
+                                </IconButton>
+                              )}
+                            </Grid>
+                          </Grid>
+                        ))}
+                        <Button
+                          sx={{ mt: 2 }}
+                          variant="contained"
+                          color="info"
+                          onClick={() =>
+                            push({ amount: "", date: null, method: "" })
+                          }
+                        >
+                          Add Advance Payment
+                        </Button>
+                      </div>
+                    )}
+                  </FieldArray>
+                </Grid>
 
                 {/* Submit Button */}
                 <Grid item xs={12}>

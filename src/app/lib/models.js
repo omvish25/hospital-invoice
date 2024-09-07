@@ -193,9 +193,19 @@ const IpdCasePaperSchema = new mongoose.Schema(
             type: String,
            
         },
-        AdvanceAmount: {
-            type: String,
-        },
+        AdvanceAmounts: [
+            {
+                amount: {
+                    type: String, 
+                },
+                date: {
+                    type: Date, 
+                },
+                method: {
+                    type: String, 
+                }
+            }
+        ],
 
     },
     { timestamps: true }
