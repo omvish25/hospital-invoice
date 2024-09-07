@@ -86,10 +86,12 @@ export default function IpdForm() {
   const [casePaper, setCasePaper] = useState([])
 
   useEffect(() => {
+    console.log("calling api")
     fetchindoorcasepaper()
   }, [])
 
   const fetchindoorcasepaper = async () => {
+    console.log("inside api")
     try {
       // Use axios to fetch the data
       const response = await axios.get(GATALLCASEPAPER_API, {
