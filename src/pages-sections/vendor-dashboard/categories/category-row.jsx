@@ -53,7 +53,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
             <tr style="width: 100%;">
                 <th style="width: 50%; padding-left: 10px; text-align: start;">Advance Amt :</th>
                 <td style="width: 50%; text-align: end; padding-right: 10px;">
-                    ${advance.amount} ( ${convertToDDMMYYYY(advance.date)} ) - ${advance.method}
+                    ${advance.amount} - ${advance.method}
                 </td>
             </tr>`;
         }).join('');
@@ -169,7 +169,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
                     <th>Ip No:</th>
                     <td>${caseData?.IpNo}</td>
                     <th>Bill Date:</th>
-                    <td>${convertToDDMMYYYY(caseData?.AdmissionDate)}</td>
+                    <td>${convertToDDMMYYYY(caseData?.CreatedAt)}</td>
                 </tr>
                 <tr>
                     <th>Address:</th>
