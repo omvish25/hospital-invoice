@@ -46,7 +46,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
 
 
     const handleAdvanceDownloadPdf = () => {
-        const doc = new jsPDF();
+        const doc = new jsPDF({ orientation: "portrait" });
         const scale = 2;
         const advanceRows = caseData?.AdvanceAmounts.map((advance) => {
             return `
@@ -253,37 +253,31 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
 
     `;
 
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = htmlContent;
-        document.body.appendChild(tempDiv);
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlContent;
+    document.body.appendChild(tempDiv);
 
-        const opt = {
-            scale: scale,
-            useCORS: true,
-            logging: true
-        };
+    html2canvas(tempDiv, {
+        scale: 4,  // Increase scale for higher resolution
+        useCORS: true,
+        logging: true,
+    }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-        html2canvas(tempDiv, {
-            scale: 4,  // Increase scale for higher resolution
-            useCORS: true,
-            logging: true,
-        }).then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
+        const imgWidth = 210; // A4 width in mm (portrait)
+        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
 
-            const imgWidth = 210; // A4 width in mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
+        const doc = new jsPDF({
+            orientation: 'portrait', // Ensure portrait mode
+            unit: 'mm',
+            format: 'a4', // Standard A4 size
+        });
 
-            const doc = new jsPDF({
-                orientation: imgHeight > 297 ? 'portrait' : 'landscape', // Adjust orientation based on aspect ratio
-                unit: 'mm',
-                format: [imgWidth, imgHeight], // Dynamic format based on content
-            });
+        doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST');
 
-            doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST'); // or 'NONE' for no compression
+        doc.save(`hospital-advance-${caseData?.MrNo}.pdf`);
 
-            doc.save(`hospital-advance-${caseData?.MrNo}.pdf`);
-
-            document.body.removeChild(tempDiv);
+        document.body.removeChild(tempDiv);
         });
 
     };
@@ -339,7 +333,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
     };
 
     const handleDownloadPdf = () => {
-        const doc = new jsPDF();
+        const doc = new jsPDF({ orientation: "portrait" });
 
         const htmlContent = `
 <!DOCTYPE html>
@@ -513,33 +507,32 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
 
 `;
 
-        // Create a temporary DOM element to hold the HTML content
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = htmlContent;
-        document.body.appendChild(tempDiv);
+const tempDiv = document.createElement("div");
+tempDiv.innerHTML = htmlContent;
+document.body.appendChild(tempDiv);
 
-        html2canvas(tempDiv, {
-            scale: 4,  // Increase scale for higher resolution
-            useCORS: true,
-            logging: true,
-        }).then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
+html2canvas(tempDiv, {
+    scale: 4,  // Increase scale for higher resolution
+    useCORS: true,
+    logging: true,
+}).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png");
 
-            const imgWidth = 210; // A4 width in mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
+    const imgWidth = 210; // A4 width in mm (portrait)
+    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
 
-            const doc = new jsPDF({
-                orientation: imgHeight > 297 ? 'portrait' : 'landscape', // Adjust orientation based on aspect ratio
-                unit: 'mm',
-                format: [imgWidth, imgHeight], // Dynamic format based on content
-            });
+    const doc = new jsPDF({
+        orientation: 'portrait', // Ensure portrait mode
+        unit: 'mm',
+        format: 'a4', // Standard A4 size
+    });
 
-            doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST'); // or 'NONE' for no compression
+    doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST');
 
-            doc.save(`hospital-MrNo-${MrNo}.pdf`);
+    doc.save(`hospital-casepaper-${caseData?.MrNo}.pdf`);
 
-            document.body.removeChild(tempDiv);
-        });
+    document.body.removeChild(tempDiv);
+});
     };
     const [casePublish, setCasePublish] = useState(published);
     const handleDelete = async () => {

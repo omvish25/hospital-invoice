@@ -71,7 +71,7 @@ console.log(formatedDoaTime)
     const formatedDodTime = convertUTCToIST(DodTime)
     console.log(formatedDodTime)
     const handleDownloadPdf = () => {
-        const doc = new jsPDF();
+        const doc = new jsPDF({ orientation: "portrait" });
         const scale = 2;
         const servicesRows = services.map((service) => `
         <tr>
@@ -343,32 +343,26 @@ console.log(formatedDoaTime)
     tempDiv.innerHTML = htmlContent;
     document.body.appendChild(tempDiv);
 
-    const opt = {
-        scale: scale,
-        useCORS: true,
-        logging: true
-    };
-
     html2canvas(tempDiv, {
         scale: 4,  // Increase scale for higher resolution
         useCORS: true,
         logging: true,
     }).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
-        
-        const imgWidth = 210; // A4 width in mm
+
+        const imgWidth = 210; // A4 width in mm (portrait)
         const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate height to maintain aspect ratio
-        
+
         const doc = new jsPDF({
-            orientation: imgHeight > 297 ? 'portrait' : 'landscape', // Adjust orientation based on aspect ratio
+            orientation: 'portrait', // Ensure portrait mode
             unit: 'mm',
-            format: [imgWidth, imgHeight], // Dynamic format based on content
+            format: 'a4', // Standard A4 size
         });
-    
-        doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST'); // or 'NONE' for no compression
-    
-        doc.save(`hospital-bill-${BillNo}.pdf`);
-        
+
+        doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight, undefined, 'FAST');
+
+        doc.save(`hospital-final-${BillNo}.pdf`);
+
         document.body.removeChild(tempDiv);
     });
     
