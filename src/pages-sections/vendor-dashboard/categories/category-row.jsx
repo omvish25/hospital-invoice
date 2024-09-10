@@ -411,7 +411,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Admission Date</strong></td>
-            <td style="padding: 5px;"> :${convertUTCToISTDate(AdmissionDate)}</td>
+            <td style="padding: 5px;"> :${convertToDDMMYYYY(AdmissionDate)}</td>
             <td style="padding: 5px;"><strong>Department Name</strong> </td>
             <td style="padding: 5px;"> : ${caseData.DepartmentName}</td>
            
