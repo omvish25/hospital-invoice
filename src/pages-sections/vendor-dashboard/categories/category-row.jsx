@@ -332,6 +332,19 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
         return moment(utcDateString).tz('Asia/Kolkata').format('DD/MM/YYYY');
     };
 
+    console.log(convertToIST(AdmissionDate))
+    function convertToIST(utcDateStr) {
+        // Parse the UTC date string
+        let utcDate = new Date(utcDateStr);
+    
+        // Offset for IST (Indian Standard Time is UTC + 5:30)
+        let istOffset = 5.5 * 60 * 60 * 1000; // in milliseconds
+    
+        // Convert UTC to IST
+        let istDate = new Date(utcDate.getTime() + istOffset);
+    
+        return istDate.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+    }
     const handleDownloadPdf = () => {
         const doc = new jsPDF({ orientation: "portrait" });
 
@@ -411,7 +424,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Admission Date</strong></td>
-            <td style="padding: 5px;"> :${convertToDDMMYYYY(AdmissionDate)}</td>
+            <td style="padding: 5px;"> :${convertToIST(AdmissionDate).split(',')[0]}</td>
             <td style="padding: 5px;"><strong>Department Name</strong> </td>
             <td style="padding: 5px;"> : ${caseData.DepartmentName}</td>
            
