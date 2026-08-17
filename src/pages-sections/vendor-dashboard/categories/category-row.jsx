@@ -472,7 +472,7 @@ const totalAdvancePaid = caseData?.AdvanceAmounts.reduce((total, advance) => {
         </tr>
         <tr>
             <td style="padding: 5px;"><strong>Relative Name</strong> </td>
-            <td style="padding: 5px;"> :${caseData.RelationName} </td>
+            <td style="padding: 5px;"> :${caseData.RelativeName} </td>
             <td style="padding: 5px;"><strong>Relative Address</strong> </td>
             <td style="padding: 5px;"> : ${caseData.RelationAddress}</td>
          
